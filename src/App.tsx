@@ -6,6 +6,7 @@ import CharactersPage from "./components/pages/Characters";
 import EpisodesPage from "./components/pages/Episodes";
 import LocationsPage from "./components/pages/Locations";
 import RootLayout from "./components/pages/RootLayout";
+import CharacterDetail from "./components/pages/CharacterDetail";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,16 @@ const router = createBrowserRouter([
       },
       {
         path: "characters",
-        element: <CharactersPage />,
+        children: [
+          {
+            index: true,
+            element: <CharactersPage />,
+          },
+          {
+            path: ":characterId",
+            element: <CharacterDetail />,
+          },
+        ],
       },
       {
         path: "episodes",
