@@ -1,5 +1,7 @@
 import { Character, CharacterLocation } from "../character/CharacterInfo";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { json } from "react-router";
 
 const DUMMY_CHARACTERS: Character[] = [
   {
@@ -34,18 +36,45 @@ const DUMMY_CHARACTERS: Character[] = [
   },
 ];
 const CharactersPage = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const [fetchedCharacters, setFetchedCharacters] = useState<Character[]>([]);
+
+  useEffect(() => {
+    async function fetchCharacters() {
+      setIsLoading(true);
+
+      const response = await fetch("https://rickandmortyapi.com/api/character");
+      if (!response.ok) {
+        setError(true);
+      } else {
+        const responseJson = await response.json();
+        const results: Character[] = responseJson.results;
+        setFetchedCharacters(results);
+      }
+
+      setIsLoading(false);
+    }
+
+    fetchCharacters();
+  }, []);
+
   return (
     <div>
       <h1>Characters</h1>
-      <ul>
-        {DUMMY_CHARACTERS.map((character) => {
-          return (
-            <li key={character.id}>
-              <Link to={`${character.id}`}>{character.name}</Link>
-            </li>
-          );
-        })}
-      </ul>
+      {isLoading && !error && <p>Loading...</p>}
+      {error && !isLoading && <p>Unexpected error</p>}
+      {!error && !isLoading && (
+        <ul>
+          {fetchedCharacters.map((character) => {
+            return (
+              <li key={character.id}>
+                <Link to={`${character.id}`}>{character.name}</Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };
