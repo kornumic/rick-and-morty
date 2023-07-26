@@ -20,10 +20,13 @@ export type Character = {
   created: string;
 };
 
-const CharacterInfo: React.FC<{ characterId: string }> = ({ characterId }) => {
+const CharacterInfo: React.FC<{ character: Character }> = ({ character }) => {
   return (
     <>
-      <p>{characterId}</p>
+      <p>{character.name}</p>
+      <img src={character.image} alt={character.name} />
+      <p>{character.status}</p>
+      <p>{character.species}</p>
     </>
   );
 };
