@@ -1,5 +1,6 @@
 import React from "react";
 import { Character } from "./CharacterInfo";
+import Status from "./Status";
 
 const CharacterItem: React.FC<{ character: Character }> = ({ character }) => {
   return (
@@ -13,7 +14,7 @@ const CharacterItem: React.FC<{ character: Character }> = ({ character }) => {
       </div>
       <div className="text-left p-2 w-full">
         <h1 className="py-4 w-full text-white text-2xl">{character.name}</h1>
-        <p className="py-2 text-gray-400">{character.status}</p>
+        <Status status={character.status} />
       </div>
     </div>
   );

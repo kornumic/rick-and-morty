@@ -1,4 +1,5 @@
 import React from "react";
+import Status from "./Status";
 
 export type CharacterLocation = {
   name: string;
@@ -27,7 +28,7 @@ const CharacterInfo: React.FC<{ character: Character }> = ({ character }) => {
       <div className="flex justify-center">
         <img src={character.image} alt={character.name} />
       </div>
-      <p className="text-center">{character.status}</p>
+      <Status status={character.status} />
       <p className="text-center">{character.species}</p>
     </div>
   );
