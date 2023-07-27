@@ -22,12 +22,12 @@ export type Character = {
 
 const CharacterInfo: React.FC<{ character: Character }> = ({ character }) => {
   return (
-    <>
-      <p>{character.name}</p>
+    <div className="justify-center content-center">
+      <h1 className="text-xl">{character.name}</h1>
       <img src={character.image} alt={character.name} />
       <p>{character.status}</p>
       <p>{character.species}</p>
-    </>
+    </div>
   );
 };
 
