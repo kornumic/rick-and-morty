@@ -1,7 +1,6 @@
 import CharacterInfo, { Character } from "../character/CharacterInfo";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
-import characters from "./Characters";
 
 const CharacterDetail = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +19,7 @@ const CharacterDetail = () => {
       setIsLoading(false);
     }
 
-    fetchCharacter();
+    fetchCharacter().then(() => {});
   }, [characterId]);
   console.log(loadedCharacter);
   return (

@@ -1,6 +1,5 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.css";
 import HomePage from "./components/pages/Home";
 import CharactersPage from "./components/pages/Characters";
 import EpisodesPage from "./components/pages/Episodes";
