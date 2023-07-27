@@ -1,6 +1,7 @@
 import { Character } from "../character/CharacterInfo";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import CharacterItem from "../character/CharacterItem";
 
 const CharactersPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -28,7 +29,6 @@ const CharactersPage = () => {
 
   return (
     <div>
-      <h1 className="text-left text-4xl p-4">Characters</h1>
       {isLoading && !error && <p>Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
@@ -36,7 +36,9 @@ const CharactersPage = () => {
           {fetchedCharacters.map((character) => {
             return (
               <li className="text-center" key={character.id}>
-                <Link to={`${character.id}`}>{character.name}</Link>
+                <Link to={`${character.id}`}>
+                  <CharacterItem character={character} />
+                </Link>
               </li>
             );
           })}
