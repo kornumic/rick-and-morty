@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export type CharacterLocation = {
   name: string;
@@ -22,11 +22,13 @@ export type Character = {
 
 const CharacterInfo: React.FC<{ character: Character }> = ({ character }) => {
   return (
-    <div className="justify-center content-center">
-      <h1 className="text-xl">{character.name}</h1>
-      <img src={character.image} alt={character.name} />
-      <p>{character.status}</p>
-      <p>{character.species}</p>
+    <div className="flex-col">
+      <h1 className="text-xl text-center">{character.name}</h1>
+      <div className="flex justify-center">
+        <img src={character.image} alt={character.name} />
+      </div>
+      <p className="text-center">{character.status}</p>
+      <p className="text-center">{character.species}</p>
     </div>
   );
 };

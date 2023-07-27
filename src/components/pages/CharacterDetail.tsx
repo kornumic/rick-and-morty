@@ -21,7 +21,6 @@ const CharacterDetail = () => {
 
     fetchCharacter().then(() => {});
   }, [characterId]);
-  console.log(loadedCharacter);
   return (
     <>
       {!isLoading && loadedCharacter && (

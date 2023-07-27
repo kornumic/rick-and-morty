@@ -28,14 +28,14 @@ const CharactersPage = () => {
 
   return (
     <div>
-      <h1>Characters</h1>
+      <h1 className="text-left text-4xl p-4">Characters</h1>
       {isLoading && !error && <p>Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
-        <ul>
+        <ul className="flex-col">
           {fetchedCharacters.map((character) => {
             return (
-              <li key={character.id}>
+              <li className="text-center" key={character.id}>
                 <Link to={`${character.id}`}>{character.name}</Link>
               </li>
             );

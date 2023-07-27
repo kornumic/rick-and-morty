@@ -50,3 +50,5 @@ function App() {
 }
 
 export default App;
+
+// <a target="_blank" href="https://icons8.com/icon/54HwwbK2s8OM/rick-sanchez">Rick Sanchez</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
