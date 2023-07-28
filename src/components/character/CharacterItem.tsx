@@ -4,7 +4,7 @@ import Status from "./Status";
 
 const CharacterItem: React.FC<{ character: Character }> = ({ character }) => {
   return (
-    <div className="flex grid-cols-2 auto-cols-auto rounded-2xl items-top bg-[#181818] hover:bg-[#303030] mx-80 my-10 p-2">
+    <div className="flex grid-cols-2 auto-cols-auto rounded-2xl items-top bg-[#181818] hover:bg-[#303030] mx-80 hover:mx-72 transition-all my-10 p-2">
       <div className="p-2">
         <img
           className="rounded-md w-32 "
@@ -12,7 +12,7 @@ const CharacterItem: React.FC<{ character: Character }> = ({ character }) => {
           alt={character.name}
         />
       </div>
-      <div className="text-left p-2 w-full">
+      <div className="text-left m-4 w-full">
         <h1 className="py-4 w-full text-white text-2xl">{character.name}</h1>
         <Status status={character.status} />
       </div>
