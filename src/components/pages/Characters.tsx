@@ -2,8 +2,9 @@ import { Character } from "../character/CharacterInfo";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CharacterItem from "../character/CharacterItem";
+import PagesChanger from "../layout/PagesChanger";
 
-type PageList = {
+export type PageList = {
   prev: string | null;
   next: string | null;
 };
@@ -59,6 +60,11 @@ const CharactersPage = () => {
 
   return (
     <>
+      <PagesChanger
+        pages={pages}
+        prevButtonHandler={prevButtonHandler}
+        nextButtonHandler={nextButtonHandler}
+      />
       <div>
         {isLoading && !error && <p>Loading...</p>}
         {error && !isLoading && <p>Unexpected error</p>}
@@ -75,14 +81,6 @@ const CharactersPage = () => {
             })}
           </ul>
         )}
-      </div>
-      <div>
-        <button disabled={!pages.prev} onClick={prevButtonHandler}>
-          Previous
-        </button>
-        <button disabled={!pages.next} onClick={nextButtonHandler}>
-          Next
-        </button>
       </div>
     </>
   );
