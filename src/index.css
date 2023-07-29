@@ -9,6 +9,10 @@ body {
 
 @layer components {
     .btn-primary {
-        @apply flex uppercase w-32 h-12 text-xl justify-center items-center rounded-xl bg-[#181818] hover:bg-[#555555] disabled:bg-[#303030]  border-2 border-white transition-all
+        @apply flex uppercase w-32 h-12 text-xl justify-center items-center rounded-full bg-[#181818] hover:bg-[#555555] disabled:bg-[#303030] border border-white transition-all
+    }
+
+    .nav-active {
+        @apply text-2xl underline underline-offset-4 transition-all
     }
 }

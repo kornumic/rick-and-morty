@@ -1,4 +1,4 @@
-import { PageList } from "../pages/Characters";
+import { PageList } from "../../pages/Characters";
 import React from "react";
 
 const PagesChanger: React.FC<{
@@ -7,7 +7,7 @@ const PagesChanger: React.FC<{
   nextButtonHandler: () => void;
 }> = ({ pages, prevButtonHandler, nextButtonHandler }) => {
   return (
-    <div className="flex flex-row justify-between row-end-2 mx-80 my-4">
+    <div className="flex flex-row justify-between row-end-2 mx-96 my-4">
       <div>
         {pages.prev && (
           <button className="btn-primary" onClick={prevButtonHandler}>

@@ -1,4 +1,6 @@
-import CharacterInfo, { Character } from "../character/CharacterInfo";
+import CharacterInfo, {
+  Character,
+} from "../components/character/CharacterInfo";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 

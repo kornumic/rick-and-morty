@@ -1,8 +1,8 @@
-import { Character } from "../character/CharacterInfo";
+import { Character } from "../components/character/CharacterInfo";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import CharacterItem from "../character/CharacterItem";
-import PagesChanger from "../layout/PagesChanger";
+import CharacterItem from "../components/character/CharacterItem";
+import PagesChanger from "../components/layout/PagesChanger";
 
 export type PageList = {
   prev: string | null;
@@ -21,7 +21,6 @@ const CharactersPage = () => {
   useEffect(() => {
     async function fetchCharacters() {
       setIsLoading(true);
-
       const response = await fetch(currentPage);
       if (!response.ok) {
         setError(true);
@@ -63,13 +62,13 @@ const CharactersPage = () => {
       {isLoading && !error && <p className="transition-all">Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
-        <div>
+        <div className="my-6">
           <PagesChanger
             pages={pages}
             prevButtonHandler={prevButtonHandler}
             nextButtonHandler={nextButtonHandler}
           />
-          <ul className="flex-col">
+          <ul className="flex-col my-12">
             {fetchedCharacters.map((character) => {
               return (
                 <li className="text-center" key={character.id}>
