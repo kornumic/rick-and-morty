@@ -60,15 +60,15 @@ const CharactersPage = () => {
 
   return (
     <>
-      <PagesChanger
-        pages={pages}
-        prevButtonHandler={prevButtonHandler}
-        nextButtonHandler={nextButtonHandler}
-      />
-      <div>
-        {isLoading && !error && <p>Loading...</p>}
-        {error && !isLoading && <p>Unexpected error</p>}
-        {!error && !isLoading && (
+      {isLoading && !error && <p className="transition-all">Loading...</p>}
+      {error && !isLoading && <p>Unexpected error</p>}
+      {!error && !isLoading && (
+        <div>
+          <PagesChanger
+            pages={pages}
+            prevButtonHandler={prevButtonHandler}
+            nextButtonHandler={nextButtonHandler}
+          />
           <ul className="flex-col">
             {fetchedCharacters.map((character) => {
               return (
@@ -80,8 +80,14 @@ const CharactersPage = () => {
               );
             })}
           </ul>
-        )}
-      </div>
+
+          <PagesChanger
+            pages={pages}
+            prevButtonHandler={prevButtonHandler}
+            nextButtonHandler={nextButtonHandler}
+          />
+        </div>
+      )}
     </>
   );
 };
