@@ -6,6 +6,7 @@ import EpisodesPage from "./pages/Episodes";
 import LocationsPage from "./pages/Locations";
 import RootLayout from "./pages/RootLayout";
 import CharacterDetail from "./pages/CharacterDetail";
+import Library from "./pages/Library";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "library",
+        element: <Library />,
       },
       {
         path: "characters",
