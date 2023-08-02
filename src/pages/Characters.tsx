@@ -36,19 +36,13 @@ const CharactersPage = () => {
     ).then();
   }, [sendRequest, currentPage]);
 
-  const prevButtonHandler = () => {
-    if (pages.prev) {
-      setCurrentPage({ page: +currentPage.page - 1 });
+  const pageButtonHandler = (move: number) => {
+    if (move === -1 && pages.prev) {
+      setCurrentPage({ page: +currentPage.page + move });
+    } else if (move === 1 && pages.next) {
+      setCurrentPage({ page: +currentPage.page + move });
     } else {
-      throw new Error("Previous page is not defined");
-    }
-  };
-
-  const nextButtonHandler = () => {
-    if (pages.next) {
-      setCurrentPage({ page: +currentPage.page + 1 });
-    } else {
-      throw new Error("Next page is not defined");
+      throw new Error("Page is not defined");
     }
   };
 
@@ -60,8 +54,8 @@ const CharactersPage = () => {
         <div className="my-6">
           <PagesChanger
             pages={pages}
-            prevButtonHandler={prevButtonHandler}
-            nextButtonHandler={nextButtonHandler}
+            prevButtonHandler={pageButtonHandler.bind(null, -1)}
+            nextButtonHandler={pageButtonHandler.bind(null, 1)}
           />
           <ul className="flex-col my-12">
             {fetchedCharacters.map((character) => {
@@ -77,8 +71,8 @@ const CharactersPage = () => {
 
           <PagesChanger
             pages={pages}
-            prevButtonHandler={prevButtonHandler}
-            nextButtonHandler={nextButtonHandler}
+            prevButtonHandler={pageButtonHandler.bind(null, -1)}
+            nextButtonHandler={pageButtonHandler.bind(null, 1)}
           />
         </div>
       )}
