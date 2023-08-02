@@ -11,7 +11,7 @@ const Status: React.FC<{ status: string }> = ({ status }) => {
   }
 
   return (
-    <div className="flex ">
+    <div className="flex justify-center items-center">
       <div
         className={`flex flex-row m-2 ${statusStyle} w-3 h-3 rounded-full  `}
       ></div>
