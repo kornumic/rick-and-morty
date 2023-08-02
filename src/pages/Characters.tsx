@@ -20,7 +20,7 @@ const CharactersPage = () => {
   const { isLoading, error, sendRequest } = useHttp();
 
   useEffect(() => {
-    async function transformData(data: any) {
+    async function applyData(data: any) {
       const characters: Character[] = data.results;
       const pages: PageList = {
         prev: !!data.info.prev,
@@ -32,7 +32,7 @@ const CharactersPage = () => {
 
     sendRequest(
       { url: charactersUrl + "/?page=" + currentPage.page.toString() },
-      transformData,
+      applyData,
     ).then();
   }, [sendRequest, currentPage]);
 

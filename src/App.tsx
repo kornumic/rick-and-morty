@@ -7,6 +7,7 @@ import LocationsPage from "./pages/Locations";
 import RootLayout from "./pages/RootLayout";
 import CharacterDetail from "./pages/CharacterDetail";
 import Library from "./pages/Library";
+import EpisodeDetail from "./pages/EpisodeDetail";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +37,16 @@ const router = createBrowserRouter([
       },
       {
         path: "episodes",
-        element: <EpisodesPage />,
+        children: [
+          {
+            index: true,
+            element: <EpisodesPage />,
+          },
+          {
+            path: ":episodeId",
+            element: <EpisodeDetail />,
+          },
+        ],
       },
       {
         path: "locations",
