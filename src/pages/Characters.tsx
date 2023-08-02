@@ -3,47 +3,42 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CharacterItem from "../components/character/CharacterItem";
 import PagesChanger from "../components/layout/PagesChanger";
+import useHttp from "../hooks/use-http";
+import useUrlState from "@ahooksjs/use-url-state";
 
 export type PageList = {
-  prev: string | null;
-  next: string | null;
+  prev: boolean;
+  next: boolean;
 };
 
 const CharactersPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
   const [fetchedCharacters, setFetchedCharacters] = useState<Character[]>([]);
-  const [pages, setPages] = useState<PageList>({ prev: null, next: null });
-  const [currentPage, setCurrentPage] = useState<string>(
-    "https://rickandmortyapi.com/api/character",
-  );
+  const [pages, setPages] = useState<PageList>({ prev: false, next: false });
+  const [currentPage, setCurrentPage] = useUrlState({ page: 1 });
+  const charactersUrl = "https://rickandmortyapi.com/api/character";
+
+  const { isLoading, error, sendRequest } = useHttp();
 
   useEffect(() => {
-    async function fetchCharacters() {
-      setIsLoading(true);
-      const response = await fetch(currentPage);
-      if (!response.ok) {
-        setError(true);
-      } else {
-        const responseJson = await response.json();
-        const characters: Character[] = responseJson.results;
-        const pages: PageList = {
-          prev: responseJson.info.prev,
-          next: responseJson.info.next,
-        };
-        setFetchedCharacters(characters);
-        setPages(pages);
-      }
-
-      setIsLoading(false);
+    async function transformData(data: any) {
+      const characters: Character[] = data.results;
+      const pages: PageList = {
+        prev: !!data.info.prev,
+        next: !!data.info.next,
+      };
+      setFetchedCharacters(characters);
+      setPages(pages);
     }
 
-    fetchCharacters().then(() => {});
-  }, [currentPage]);
+    sendRequest(
+      { url: charactersUrl + "/?page=" + currentPage.page.toString() },
+      transformData,
+    ).then();
+  }, [sendRequest, currentPage]);
 
   const prevButtonHandler = () => {
     if (pages.prev) {
-      setCurrentPage(pages.prev);
+      setCurrentPage({ page: +currentPage.page - 1 });
     } else {
       throw new Error("Previous page is not defined");
     }
@@ -51,7 +46,7 @@ const CharactersPage = () => {
 
   const nextButtonHandler = () => {
     if (pages.next) {
-      setCurrentPage(pages.next);
+      setCurrentPage({ page: +currentPage.page + 1 });
     } else {
       throw new Error("Next page is not defined");
     }
