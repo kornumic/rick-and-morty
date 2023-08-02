@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/Home";
 import CharactersPage from "./pages/Characters";
@@ -45,6 +45,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+export const loginCtx = createContext(false);
 
 function App() {
   return (

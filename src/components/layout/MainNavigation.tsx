@@ -1,6 +1,18 @@
 import { NavLink } from "react-router-dom";
+import { useContext, useState } from "react";
+import { loginCtx } from "../../App";
 
 const MainNavigation = () => {
+  const [isLogin, setIsLogin] = useState(false);
+
+  const onLogInHandler = () => {
+    setIsLogin(true);
+  };
+
+  const onLogOutHandler = () => {
+    setIsLogin(false);
+  };
+
   return (
     <div className="bg-[#181818] flex flex-row-2 justify-between">
       <div className=" py-4 flex flex-row">
@@ -9,14 +21,16 @@ const MainNavigation = () => {
             Rick and Morty
           </NavLink>
         </div>
-        <div className="flex flex-col text-center justify-center w-40 h-12 text-xl uppercase align-bottom transition-all">
-          <NavLink
-            className={({ isActive }) => (isActive ? "nav-active" : "")}
-            to={"library"}
-          >
-            Library
-          </NavLink>
-        </div>
+        {isLogin && (
+          <div className="flex flex-col text-center justify-center w-40 h-12 text-xl uppercase align-bottom transition-all">
+            <NavLink
+              className={({ isActive }) => (isActive ? "nav-active" : "")}
+              to={"library"}
+            >
+              Library
+            </NavLink>
+          </div>
+        )}
         <div className="flex flex-col text-center justify-center w-40 h-12 text-xl uppercase align-bottom transition-all">
           <NavLink
             className={({ isActive }) => (isActive ? "nav-active" : "")}
@@ -43,7 +57,20 @@ const MainNavigation = () => {
         </div>
       </div>
       <div className="flex flex-col justify-center">
-        <button className="btn-primary mx-6">Sign in</button>
+        {!isLogin && (
+          <NavLink to="/">
+            <button className="btn-primary mx-6" onClick={onLogInHandler}>
+              Sign in
+            </button>
+          </NavLink>
+        )}
+        {isLogin && (
+          <NavLink to="/">
+            <button className="btn-primary mx-6" onClick={onLogOutHandler}>
+              Log out
+            </button>
+          </NavLink>
+        )}
       </div>
     </div>
   );
