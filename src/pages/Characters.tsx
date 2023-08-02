@@ -51,7 +51,7 @@ const CharactersPage = () => {
       {isLoading && !error && <p className="transition-all">Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
-        <div className="my-6">
+        <div className="my-6  mx-96">
           <PagesChanger
             pages={pages}
             prevButtonHandler={pageButtonHandler.bind(null, -1)}
