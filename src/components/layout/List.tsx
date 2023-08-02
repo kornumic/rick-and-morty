@@ -13,9 +13,9 @@ export type ItemType = {
   id: number;
 };
 
-export interface ListProps<T> {
+export interface ListProps<T extends ItemType> {
   baseUrl: string;
-  renderItem: (item: T) => React.FC;
+  renderItem: (item: T) => React.ReactNode;
 }
 
 const List = <T extends ItemType>(props: ListProps<T>) => {
@@ -67,7 +67,7 @@ const List = <T extends ItemType>(props: ListProps<T>) => {
             {fetchedItems.map((item) => {
               return (
                 <li className="text-center" key={item.id}>
-                  <Link to={`${item.id}`}>{renderItem(item)}</Link>
+                  <Link to={`${item.id}`}>{props.renderItem(item)}</Link>
                 </li>
               );
             })}
