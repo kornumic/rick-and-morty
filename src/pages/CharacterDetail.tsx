@@ -6,11 +6,10 @@ import { useEffect, useState } from "react";
 import useHttp from "../hooks/use-http";
 
 const CharacterDetail = () => {
-  const params = useParams();
-  const characterId = params.characterId!;
   const { isLoading, error, sendRequest } = useHttp();
   const [loadedCharacter, setLoadedCharacter] = useState<Character>();
-  const url = "https://rickandmortyapi.com/api/character";
+  const url =
+    "https://rickandmortyapi.com/api/character/" + useParams().characterId;
 
   useEffect(() => {
     async function apply(data: any) {
@@ -18,8 +17,8 @@ const CharacterDetail = () => {
       setLoadedCharacter(character);
     }
 
-    sendRequest({ url: url + "/" + characterId }, apply).then();
-  }, [sendRequest, characterId]);
+    sendRequest({ url: url }, apply).then();
+  }, [sendRequest, url]);
 
   return (
     <>
