@@ -53,7 +53,7 @@ const EpisodesPage = () => {
             prevButtonHandler={pageButtonHandler.bind(null, -1)}
             nextButtonHandler={pageButtonHandler.bind(null, 1)}
           />
-          <ul className="grid grid-cols-4  ">
+          <ul className="grid grid-cols-2">
             {fetchedEpisodes.map((episode) => {
               return (
                 <li key={episode.id}>

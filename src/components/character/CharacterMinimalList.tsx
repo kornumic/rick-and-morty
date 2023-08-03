@@ -1,43 +1,29 @@
 import React from "react";
 import CharacterMinimal from "./CharacterMinimal";
 import { Link } from "react-router-dom";
+import { CHARACTER_IMAGE_URL } from "../constants/rmapi-urls";
 
-const DUMMY_IMAGES = [
-  {
-    id: 1,
-    src: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-    alt: "Rick Sanchez",
-  },
-  {
-    id: 2,
-    src: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-    alt: "Morty Smith",
-  },
-  {
-    id: 3,
-    src: "https://rickandmortyapi.com/api/character/avatar/3.jpeg",
-    alt: "Summer Smith",
-  },
-  {
-    id: 4,
-    src: "https://rickandmortyapi.com/api/character/avatar/4.jpeg",
-    alt: "Beth Smith",
-  },
-  {
-    id: 5,
-    src: "https://rickandmortyapi.com/api/character/avatar/5.jpeg",
-    alt: "Jerry Smith",
-  },
-];
+const CharacterMinimalList: React.FC<{
+  characters: string[];
+}> = ({ characters }) => {
+  const extractIdFromUrl = (characterUrl: string) => {
+    const id = +characterUrl.split("character/")[1];
+    const src = CHARACTER_IMAGE_URL + id.toString() + ".jpeg";
+    const alt = "Character " + id.toString();
 
-const CharacterMinimalList: React.FC = () => {
+    return { src, alt, id };
+  };
+
+  const chosenCharacters = characters.slice(0, 10);
+
   return (
-    <ul className="flex flex-row items-center justify-center h-14 w-52 ">
-      {DUMMY_IMAGES.map((image) => {
+    <ul className="flex flex-row-auto items-center justify-center h-14 w-full ">
+      {chosenCharacters.map((character) => {
+        const { src, alt, id } = extractIdFromUrl(character);
         return (
-          <li key={image.id}>
-            <Link to={`episode/${image.id}`}>
-              <CharacterMinimal imageUrl={image.src} imageAlt={image.alt} />
+          <li key={id}>
+            <Link to={`character/${id}`}>
+              <CharacterMinimal imageUrl={src} imageAlt={alt} />
             </Link>
           </li>
         );
