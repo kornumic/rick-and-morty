@@ -10,10 +10,10 @@ const EpisodeDetail = () => {
     "https://rickandmortyapi.com/api/episode/" + useParams().episodeId;
 
   useEffect(() => {
-    const fetchEpisode = (data: any) => {
+    async function fetchEpisode(data: any) {
       const episode: Episode = data;
       setLoadedEpisode(episode);
-    };
+    }
 
     sendRequest({ url: url }, fetchEpisode).then();
   }, [sendRequest]);
