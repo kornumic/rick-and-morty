@@ -1,19 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const CharacterMinimal: React.FC<{
   imageUrl: string;
   imageAlt?: string;
-  onClick?: () => {};
-}> = ({ imageUrl, imageAlt, onClick }) => {
+  to: string;
+}> = ({ imageUrl, imageAlt, to }) => {
   return (
-    <div>
+    <Link to={to}>
       <img
         src={imageUrl}
         alt={imageAlt}
         className="rounded-full w-10 min-h-min p-0.5"
-        onClick={onClick}
       />
-    </div>
+    </Link>
   );
 };
 

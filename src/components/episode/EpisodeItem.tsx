@@ -24,7 +24,7 @@ const EpisodeItem: React.FC<{ episode: Episode }> = ({ episode }) => {
             Characters in this episode:
           </p>
         </div>
-        <CharacterMinimalList characters={episode.characters} />
+        <CharacterMinimalList characters={episode.characters} quantity={10} />
       </div>
     </div>
   );
