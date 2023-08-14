@@ -22,7 +22,7 @@ const CharacterMinimalList: React.FC<{
         const { src, alt, id } = extractIdFromUrl(character);
         return (
           <li key={id}>
-            <Link to={`character/${id}`}>
+            <Link to={`/characters/${id}`}>
               <CharacterMinimal imageUrl={src} imageAlt={alt} />
             </Link>
           </li>

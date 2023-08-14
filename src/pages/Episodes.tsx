@@ -48,11 +48,14 @@ const EpisodesPage = () => {
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
         <div className="my-6 mx-64">
-          <PagesChanger
-            pages={pages}
-            prevButtonHandler={pageButtonHandler.bind(null, -1)}
-            nextButtonHandler={pageButtonHandler.bind(null, 1)}
-          />
+          <div className="m-4">
+            <PagesChanger
+              pages={pages}
+              prevButtonHandler={pageButtonHandler.bind(null, -1)}
+              nextButtonHandler={pageButtonHandler.bind(null, 1)}
+            />
+          </div>
+
           <ul className="grid grid-cols-2">
             {fetchedEpisodes.map((episode) => {
               return (
@@ -65,11 +68,13 @@ const EpisodesPage = () => {
             })}
           </ul>
 
-          <PagesChanger
-            pages={pages}
-            prevButtonHandler={pageButtonHandler.bind(null, -1)}
-            nextButtonHandler={pageButtonHandler.bind(null, 1)}
-          />
+          <div className="m-4">
+            <PagesChanger
+              pages={pages}
+              prevButtonHandler={pageButtonHandler.bind(null, -1)}
+              nextButtonHandler={pageButtonHandler.bind(null, 1)}
+            />
+          </div>
         </div>
       )}
     </>
