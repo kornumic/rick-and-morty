@@ -6,41 +6,17 @@ import useHttp from "../hooks/use-http";
 import PagesChanger from "../components/layout/PagesChanger";
 import EpisodeItem from "../components/episode/EpisodeItem";
 import { Link } from "react-router-dom";
+import useEntityList from "../hooks/use-entity-list";
+import { Character } from "../components/character/CharacterInfo";
 
 const EpisodesPage = () => {
-  const [fetchedEpisodes, setFetchedEpisodes] = useState<Episode[]>([]);
-  const [pages, setPages] = useState<PageList>({ prev: false, next: false });
-  const [currentPage, setCurrentPage] = useUrlState({ page: 1 });
-  const episodesUrl = "https://rickandmortyapi.com/api/episode";
-
-  const { isLoading, error, sendRequest } = useHttp();
-
-  useEffect(() => {
-    async function applyData(data: any) {
-      const episodes: Episode[] = data.results;
-      const pages: PageList = {
-        prev: !!data.info.prev,
-        next: !!data.info.next,
-      };
-      setFetchedEpisodes(episodes);
-      setPages(pages);
-    }
-
-    sendRequest(
-      { url: episodesUrl + "/?page=" + currentPage.page.toString() },
-      applyData,
-    ).then();
-  }, [sendRequest, currentPage]);
-
-  const pageButtonHandler = (move: number) => {
-    if (move === -1 && pages.prev) {
-      setCurrentPage({ page: +currentPage.page + move });
-    } else if (move === 1 && pages.next) {
-      setCurrentPage({ page: +currentPage.page + move });
-    } else {
-      throw new Error("Page is not defined");
-    }
-  };
+  const {
+    fetchedEntities: fetchedEpisodes,
+    pages,
+    isLoading,
+    error,
+    pageButtonHandler,
+  } = useEntityList<Episode>("/episode");
 
   return (
     <>

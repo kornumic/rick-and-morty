@@ -5,6 +5,7 @@ import CharacterItem from "../components/character/CharacterItem";
 import PagesChanger from "../components/layout/PagesChanger";
 import useHttp from "../hooks/use-http";
 import useUrlState from "@ahooksjs/use-url-state";
+import useEntityList from "../hooks/use-entity-list";
 
 export type PageList = {
   prev: boolean;
@@ -12,39 +13,13 @@ export type PageList = {
 };
 
 const CharactersPage = () => {
-  const [fetchedCharacters, setFetchedCharacters] = useState<Character[]>([]);
-  const [pages, setPages] = useState<PageList>({ prev: false, next: false });
-  const [currentPage, setCurrentPage] = useUrlState({ page: 1 });
-  const charactersUrl = "https://rickandmortyapi.com/api/character";
-
-  const { isLoading, error, sendRequest } = useHttp();
-
-  useEffect(() => {
-    async function applyData(data: any) {
-      const characters: Character[] = data.results;
-      const pages: PageList = {
-        prev: !!data.info.prev,
-        next: !!data.info.next,
-      };
-      setFetchedCharacters(characters);
-      setPages(pages);
-    }
-
-    sendRequest(
-      { url: charactersUrl + "/?page=" + currentPage.page.toString() },
-      applyData,
-    ).then();
-  }, [sendRequest, currentPage]);
-
-  const pageButtonHandler = (move: number) => {
-    if (move === -1 && pages.prev) {
-      setCurrentPage({ page: +currentPage.page + move });
-    } else if (move === 1 && pages.next) {
-      setCurrentPage({ page: +currentPage.page + move });
-    } else {
-      throw new Error("Page is not defined");
-    }
-  };
+  const {
+    fetchedEntities: fetchedCharacters,
+    pages,
+    isLoading,
+    error,
+    pageButtonHandler,
+  } = useEntityList<Character>("/character");
 
   return (
     <>
