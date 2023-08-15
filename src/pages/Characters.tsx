@@ -1,10 +1,7 @@
 import { Character } from "../components/character/CharacterInfo";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
 import CharacterItem from "../components/character/CharacterItem";
 import PagesChanger from "../components/layout/PagesChanger";
-import useHttp from "../hooks/use-http";
-import useUrlState from "@ahooksjs/use-url-state";
 import useEntityList from "../hooks/use-entity-list";
 
 export type PageList = {

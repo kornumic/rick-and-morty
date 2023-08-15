@@ -1,13 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { PageList } from "./Characters";
 import { Episode } from "../components/episode/EpisodeInfo";
-import useUrlState from "@ahooksjs/use-url-state";
-import useHttp from "../hooks/use-http";
 import PagesChanger from "../components/layout/PagesChanger";
 import EpisodeItem from "../components/episode/EpisodeItem";
 import { Link } from "react-router-dom";
 import useEntityList from "../hooks/use-entity-list";
-import { Character } from "../components/character/CharacterInfo";
 
 const EpisodesPage = () => {
   const {
