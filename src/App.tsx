@@ -8,6 +8,7 @@ import RootLayout from "./pages/RootLayout";
 import CharacterDetail from "./pages/CharacterDetail";
 import Library from "./pages/Library";
 import EpisodeDetail from "./pages/EpisodeDetail";
+import LocationDetail from "./pages/LocationDetail";
 
 const router = createBrowserRouter([
   {
@@ -50,7 +51,16 @@ const router = createBrowserRouter([
       },
       {
         path: "locations",
-        element: <LocationsPage />,
+        children: [
+          {
+            index: true,
+            element: <LocationsPage />,
+          },
+          {
+            path: ":locationId",
+            element: <LocationDetail />,
+          },
+        ],
       },
     ],
   },

@@ -4,12 +4,12 @@ import CharacterInfo, {
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import useHttp from "../hooks/use-http";
+import { RM_API } from "../constants/fe-urls";
 
 const CharacterDetail = () => {
   const { isLoading, error, sendRequest } = useHttp();
   const [loadedCharacter, setLoadedCharacter] = useState<Character>();
-  const url =
-    "https://rickandmortyapi.com/api/character/" + useParams().characterId;
+  const url = RM_API + "/character/" + useParams().characterId;
 
   useEffect(() => {
     async function apply(data: any) {

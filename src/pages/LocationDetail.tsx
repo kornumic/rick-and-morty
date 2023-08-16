@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Episode } from "../components/episode/EpisodeInfo";
 import { useParams } from "react-router";
 import useHttp from "../hooks/use-http";
+import { Episode } from "../components/episode/EpisodeInfo";
 import { RM_API } from "../constants/fe-urls";
 
-const EpisodeDetail = () => {
+const LocationDetail = () => {
   const { isLoading, error, sendRequest } = useHttp();
-  const [loadedEpisode, setLoadedEpisode] = useState<Episode>();
-  const url = RM_API + "/episode/" + useParams().episodeId;
+  const [loadedLocation, setLoadedLocation] = useState<Episode>();
+  const url = RM_API + "/location/" + useParams().locationId;
 
   useEffect(() => {
     async function fetchEpisode(data: any) {
       const episode: Episode = data;
-      setLoadedEpisode(episode);
+      setLoadedLocation(episode);
     }
 
     sendRequest({ url: url }, fetchEpisode).then();
@@ -22,13 +22,13 @@ const EpisodeDetail = () => {
     <>
       {isLoading && <p>Loading...</p>}
       {error && <p>Something went wrong</p>}
-      {!isLoading && !error && loadedEpisode && (
+      {!isLoading && !error && loadedLocation && (
         <div>
-          <p>{loadedEpisode.id}</p>
+          <p>{loadedLocation.id}</p>
         </div>
       )}
     </>
   );
 };
 
-export default EpisodeDetail;
+export default LocationDetail;
