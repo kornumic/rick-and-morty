@@ -30,7 +30,7 @@ export const LOCATION_EXTRA = {
     },
     {
       type: "Dream",
-      short: "other",
+      short: "person",
     },
     {
       type: "Dimension",
@@ -122,11 +122,11 @@ export const LOCATION_EXTRA = {
     },
     {
       type: "Non-Diegetic Alternative Reality",
-      short: "other",
+      short: "multiverse",
     },
     {
       type: "Nightmare",
-      short: "other",
+      short: "person",
     },
     {
       type: "Asteroid",
@@ -138,11 +138,11 @@ export const LOCATION_EXTRA = {
     },
     {
       type: "Reality",
-      short: "other",
+      short: "multiverse",
     },
     {
       type: "Death Star",
-      short: "building",
+      short: "vehicle",
     },
     {
       type: "Base",
@@ -178,11 +178,11 @@ export const LOCATION_EXTRA = {
     },
     {
       type: "Consciousness",
-      short: "other",
+      short: "person",
     },
     {
       type: "Memory",
-      short: "other",
+      short: "person",
     },
   ],
 };

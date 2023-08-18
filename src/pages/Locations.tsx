@@ -19,7 +19,7 @@ const LocationsPage = () => {
       {isLoading && !error && <p className="transition-all">Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
-        <div className="my-6 mx-64">
+        <div className="my-6 mx-36">
           <div className="m-4">
             <PagesChanger
               pages={pages}
@@ -28,10 +28,10 @@ const LocationsPage = () => {
             />
           </div>
 
-          <ul className="grid grid-cols-2">
+          <ul className="grid grid-cols-4">
             {fetchedLocations.map((location) => {
               return (
-                <li key={location.id}>
+                <li className="" key={location.id}>
                   <Link to={`${location.id}`}>
                     <LocationItem location={location} />
                   </Link>
