@@ -19,9 +19,12 @@ export type Character = {
   episode: string[];
   url: string;
   created: string;
+  starred: boolean | undefined;
 };
 
-const CharacterInfo: React.FC<{ character: Character }> = ({ character }) => {
+const CharacterInfo: React.FC<{
+  character: Character;
+}> = ({ character }) => {
   return (
     <div className="flex-col">
       <h1 className="text-xl text-center">{character.name}</h1>

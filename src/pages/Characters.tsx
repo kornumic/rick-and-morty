@@ -33,9 +33,7 @@ const CharactersPage = () => {
             {fetchedCharacters.map((character) => {
               return (
                 <li className="text-center" key={character.id}>
-                  <Link to={`${character.id}`}>
-                    <CharacterItem character={character} />
-                  </Link>
+                  <CharacterItem character={character} to={`${character.id}`} />
                 </li>
               );
             })}
