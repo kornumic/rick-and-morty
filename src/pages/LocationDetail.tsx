@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import useHttp from "../hooks/use-http";
-import { Episode } from "../components/episode/EpisodeInfo";
 import { RM_API } from "../constants/fe-urls";
+import LocationInfo, { Location } from "../components/location/LocationInfo";
 
 const LocationDetail = () => {
   const { isLoading, error, sendRequest } = useHttp();
-  const [loadedLocation, setLoadedLocation] = useState<Episode>();
+  const [loadedLocation, setLoadedLocation] = useState<Location>();
   const url = RM_API + "/location/" + useParams().locationId;
 
   useEffect(() => {
-    async function fetchEpisode(data: any) {
-      const episode: Episode = data;
-      setLoadedLocation(episode);
+    async function fetchLocation(data: any) {
+      const location: Location = data;
+      setLoadedLocation(location);
     }
 
-    sendRequest({ url: url }, fetchEpisode).then();
+    sendRequest({ url: url }, fetchLocation).then();
   }, [sendRequest, url]);
 
   return (
@@ -24,7 +24,7 @@ const LocationDetail = () => {
       {error && <p>Something went wrong</p>}
       {!isLoading && !error && loadedLocation && (
         <div>
-          <p>{loadedLocation.id}</p>
+          <LocationInfo location={loadedLocation} />
         </div>
       )}
     </>
