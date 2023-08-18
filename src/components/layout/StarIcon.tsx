@@ -4,17 +4,17 @@ import { TailwindClass } from "../../types/tailwind-types";
 
 const StarIcon: React.FC<{
   starred: undefined | boolean;
-  onChangeFavorite?: () => void;
+  onChangeFavorite: (event: React.MouseEvent<HTMLElement>) => void;
 }> = ({ starred, onChangeFavorite }) => {
-  const styles: TailwindClass = "w-16 h-16";
+  const styles: TailwindClass = "w-12 h-12";
   return (
-    <div className={styles} onClick={onChangeFavorite}>
+    <button className={styles} onClick={onChangeFavorite}>
       {starred ? (
         <AiFillStar className={styles} />
       ) : (
         <AiOutlineStar className={styles} />
       )}
-    </div>
+    </button>
   );
 };
 

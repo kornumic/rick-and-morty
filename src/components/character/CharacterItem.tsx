@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Character } from "./CharacterInfo";
 import Status from "./Status";
 import StarIcon from "../layout/StarIcon";
@@ -9,14 +9,17 @@ const CharacterItem: React.FC<{
   to?: string;
 }> = ({ character, to }) => {
   const navigate = useNavigate();
+  const [isFavorite, setIsFavorite] = useState(!!character.starred);
   const onNavigate = () => {
     if (to) {
       navigate(to);
     }
   };
-  const onChangeFavorite = () => {
+  const onChangeFavorite = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
     character.starred = !character.starred;
-    console.log(character.starred);
+    setIsFavorite(character.starred);
+    //TODO - save favorites to BE
   };
 
   return (
@@ -37,11 +40,8 @@ const CharacterItem: React.FC<{
           <Status status={character.status} />
         </div>
       </div>
-      <div className="flex flex-row items-center">
-        <StarIcon
-          starred={character.starred}
-          onChangeFavorite={onChangeFavorite}
-        />
+      <div className="flex flex-row items-center mx-4">
+        <StarIcon starred={isFavorite} onChangeFavorite={onChangeFavorite} />
       </div>
     </div>
   );
