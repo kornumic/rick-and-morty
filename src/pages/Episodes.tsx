@@ -4,6 +4,7 @@ import EpisodeItem from "../components/episode/EpisodeItem";
 import useEntityList from "../hooks/use-entity-list";
 
 const EpisodesPage = () => {
+  const prettyOn = false;
   const {
     fetchedEntities: fetchedEpisodes,
     pages,
@@ -13,11 +14,17 @@ const EpisodesPage = () => {
   } = useEntityList<Episode>("/episode");
 
   return (
-    <>
+    <div
+      className={
+        prettyOn
+          ? "bg-fixed bg-cover bg-[url(https://wallpapercave.com/wp/wp10058888.jpg)]"
+          : ""
+      }
+    >
       {isLoading && !error && <p className="transition-all">Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
-        <div className="my-6 mx-64">
+        <div className="py-6 mx-64">
           <div className="m-4">
             <PagesChanger
               pages={pages}
@@ -45,7 +52,7 @@ const EpisodesPage = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

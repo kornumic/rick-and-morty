@@ -30,7 +30,6 @@ export const urlByShortType = (short: string) => {
       url =
         "https://thoughtcatalog.com/wp-content/uploads/2017/11/rick-sanchez-and-morty-adult-swim.jpg";
   }
-  console.log(url);
   return url;
 };
 

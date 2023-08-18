@@ -9,6 +9,7 @@ export type PageList = {
 };
 
 const CharactersPage = () => {
+  const prettyOn = false;
   const {
     fetchedEntities: fetchedCharacters,
     pages,
@@ -18,11 +19,17 @@ const CharactersPage = () => {
   } = useEntityList<Character>("/character");
 
   return (
-    <>
+    <div
+      className={
+        prettyOn
+          ? "bg-fixed bg-cover bg-[url(https://pixelz.cc/wp-content/uploads/2018/08/rick-and-morty-characters-uhd-4k-wallpaper.jpg)]"
+          : ""
+      }
+    >
       {isLoading && !error && <p className="transition-all">Loading...</p>}
       {error && !isLoading && <p>Unexpected error</p>}
       {!error && !isLoading && (
-        <div className="my-6  mx-96">
+        <div className="py-6 mx-96">
           <PagesChanger
             pages={pages}
             prevButtonHandler={pageButtonHandler.bind(null, -1)}
@@ -45,7 +52,7 @@ const CharactersPage = () => {
           />
         </div>
       )}
-    </>
+    </div>
   );
 };
 
