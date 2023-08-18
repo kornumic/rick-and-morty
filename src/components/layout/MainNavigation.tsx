@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { useContext, useState } from "react";
-import { loginCtx } from "../../App";
+import { useState } from "react";
 
 const MainNavigation = () => {
   const [isLogin, setIsLogin] = useState(false);

@@ -1,5 +1,4 @@
 import { Character } from "../components/character/CharacterInfo";
-import { Link } from "react-router-dom";
 import CharacterItem from "../components/character/CharacterItem";
 import PagesChanger from "../components/layout/PagesChanger";
 import useEntityList from "../hooks/use-entity-list";
