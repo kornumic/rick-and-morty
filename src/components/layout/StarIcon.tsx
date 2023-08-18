@@ -6,7 +6,7 @@ const StarIcon: React.FC<{
   starred: undefined | boolean;
   onChangeFavorite: (event: React.MouseEvent<HTMLElement>) => void;
 }> = ({ starred, onChangeFavorite }) => {
-  const styles: TailwindClass = "w-12 h-12";
+  const styles: TailwindClass = "w-10 h-10";
   return (
     <button className={styles} onClick={onChangeFavorite}>
       {starred ? (

@@ -1,7 +1,6 @@
 import React from "react";
 import useEntityList from "../hooks/use-entity-list";
 import PagesChanger from "../components/layout/PagesChanger";
-import { Link } from "react-router-dom";
 import { Location } from "../components/location/LocationInfo";
 import LocationItem from "../components/location/LocationItem";
 
@@ -32,9 +31,7 @@ const LocationsPage = () => {
             {fetchedLocations.map((location) => {
               return (
                 <li className="" key={location.id}>
-                  <Link to={`${location.id}`}>
-                    <LocationItem location={location} />
-                  </Link>
+                  <LocationItem location={location} to={`${location.id}`} />
                 </li>
               );
             })}

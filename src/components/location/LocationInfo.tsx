@@ -8,6 +8,7 @@ export type Location = {
   residents: string[];
   url: string;
   created: string;
+  starred: boolean | undefined;
 };
 
 const LocationInfo: React.FC<{ location: Location }> = ({ location }) => {
