@@ -10,9 +10,12 @@ export type Episode = {
   characters: string[];
   url: string;
   created: Date;
+  starred: boolean | undefined;
 };
 
-const EpisodeInfo: React.FC<{ episode: Episode }> = ({ episode }) => {
+const EpisodeInfo: React.FC<{
+  episode: Episode;
+}> = ({ episode }) => {
   return (
     <div>
       <h1>{episode.id}</h1>

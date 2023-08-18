@@ -1,17 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Episode } from "./EpisodeInfo";
 import CharacterMinimalList from "../character/CharacterMinimalList";
 import { EPISODE_EXTRA } from "../../move-to-be/episode-extra";
+import StarIcon from "../layout/StarIcon";
+import { useNavigate } from "react-router";
 
-const EpisodeItem: React.FC<{ episode: Episode }> = ({ episode }) => {
+const EpisodeItem: React.FC<{
+  episode: Episode;
+  to?: string;
+}> = ({ episode, to }) => {
   const extra = EPISODE_EXTRA[episode.id - 1];
-  // const shortenedVersion =
+  const navigate = useNavigate();
+  const [isFavorite, setIsFavorite] = useState(!!episode.starred);
+
+  const onNavigate = () => {
+    if (to) {
+      navigate(to);
+    }
+  };
+
+  const onChangeFavorite = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    episode.starred = !episode.starred;
+    setIsFavorite(episode.starred);
+    //TODO - save favorites to BE
+  };
 
   return (
-    <div className="flex flex-col rounded-2xl h-64 items-top bg-[#181818] hover:bg-[#303030] border-white transition-all m-4 p-4 ">
+    <div
+      onClick={onNavigate}
+      className="flex flex-col rounded-2xl h-64 items-top bg-[#181818] hover:bg-[#303030] border-white transition-all m-4 p-4 "
+    >
       <div>
-        <h1 className="truncate text-3xl transition-all">{episode.name}</h1>
-        {/*<img src={extra.img} alt={extra.title} />*/}
+        <div className="flex flex-row justify-between">
+          <h1 className="truncate text-3xl transition-all">{episode.name}</h1>
+          <StarIcon starred={isFavorite} onChangeFavorite={onChangeFavorite} />
+        </div>
         <div className="py-4">
           <p className="line-clamp-2 text-xl font-thin text-gray-300">
             {extra.description}

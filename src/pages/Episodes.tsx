@@ -1,7 +1,6 @@
 import { Episode } from "../components/episode/EpisodeInfo";
 import PagesChanger from "../components/layout/PagesChanger";
 import EpisodeItem from "../components/episode/EpisodeItem";
-import { Link } from "react-router-dom";
 import useEntityList from "../hooks/use-entity-list";
 
 const EpisodesPage = () => {
@@ -31,9 +30,7 @@ const EpisodesPage = () => {
             {fetchedEpisodes.map((episode) => {
               return (
                 <li key={episode.id}>
-                  <Link to={`${episode.id}`}>
-                    <EpisodeItem episode={episode} />
-                  </Link>
+                  <EpisodeItem episode={episode} to={`${episode.id}`} />
                 </li>
               );
             })}
