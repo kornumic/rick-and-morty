@@ -3,7 +3,6 @@ import EpisodeInfo, { Episode } from "../components/episode/EpisodeInfo";
 import { useParams } from "react-router";
 import useHttp from "../hooks/use-http";
 import { RM_API } from "../constants/fe-urls";
-import LocationInfo from "../components/location/LocationInfo";
 
 const EpisodeDetail = () => {
   const { isLoading, error, sendRequest } = useHttp();

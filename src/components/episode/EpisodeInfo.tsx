@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import useHttp from "../../hooks/use-http";
-import characters from "../../pages/Characters";
+import React from "react";
 
 export type Episode = {
   id: number;
