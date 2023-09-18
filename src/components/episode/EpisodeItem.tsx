@@ -29,7 +29,7 @@ const EpisodeItem: React.FC<{
   return (
     <div
       onClick={onNavigate}
-      className="flex flex-col rounded-2xl h-64 items-top bg-[#181818] hover:bg-[#303030] border-white transition-all m-4 p-4 "
+      className="flex flex-col rounded-2xl h-64 items-top bg-[#181818] hover:bg-[#303030] border-white transition-all m-4 p-4"
     >
       <div>
         <div className="flex flex-row justify-between">

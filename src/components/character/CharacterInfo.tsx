@@ -33,6 +33,12 @@ const CharacterInfo: React.FC<{
       </div>
       <Status status={character.status} />
       <p className="text-center">{character.species}</p>
+      <p className="text-center">{character.type}</p>
+      <p className="text-center">{character.gender}</p>
+      <p className="text-center">{character.origin?.name}</p>
+      <p className="text-center">{character.location?.name}</p>
+      <p className="text-center">{character.url}</p>
+      <p className="text-center">{character.created}</p>
     </div>
   );
 };
