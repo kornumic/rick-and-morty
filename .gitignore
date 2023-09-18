@@ -1,5 +1,2 @@
 *.idea/
-node_modules
 *.DS_Store
-src/move-to-be/episodes.json
-src/move-to-be/locextra.json
