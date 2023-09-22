@@ -9,9 +9,8 @@ export const getLocationById = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(req.params.locationId);
   const location = DUMMY_LOCATIONS.find((c) => c.id === +req.params.locationId);
-  console.log(location);
+
   if (!location) {
     return next(new HttpError("Location not found", 404));
   }
@@ -27,17 +26,23 @@ export const getAllLocations = (
   const locationsPerPage = +(req.query.perPage || "20");
   const offset = (page - 1) * locationsPerPage;
 
+  // calculate info values
+  const count = DUMMY_LOCATIONS.length;
+  const pages = Math.ceil(count / locationsPerPage);
+  const nextPage = page + 1 <= pages ? page + 1 : undefined;
+  const prevPage = page - 1 > 0 ? page - 1 : undefined;
+
+  if (page > pages || page < 1)
+    return next(new HttpError("Page not found", 404));
+
   const locations = DUMMY_LOCATIONS.slice(offset, offset + locationsPerPage);
 
   res.json({
     info: {
-      count: DUMMY_LOCATIONS.length,
-      pages: Math.ceil(DUMMY_LOCATIONS.length / locationsPerPage),
-      next:
-        page + 1 <= Math.ceil(DUMMY_LOCATIONS.length / locationsPerPage)
-          ? page + 1
-          : undefined,
-      prev: page - 1 > 0 ? page - 1 : undefined,
+      count: count,
+      pages: pages,
+      next: nextPage,
+      prev: prevPage,
     },
     results: locations,
   });
@@ -50,6 +55,14 @@ export const createLocation = (
   next: NextFunction,
 ) => {
   const location = req.body as Location;
+  if (!location.name || !location.type || !location.dimension) {
+    return next(new HttpError("Invalid input", 422));
+  }
+  const foundLocation = DUMMY_LOCATIONS.find((c) => c.id === location.id);
+  if (foundLocation) {
+    return next(new HttpError("Location already exists", 422));
+  }
+
   location.id = DUMMY_LOCATIONS.length + 1;
   DUMMY_LOCATIONS.push(location);
 
@@ -61,7 +74,13 @@ export const updateLocation = (
   res: Response,
   next: NextFunction,
 ) => {
-  res.json({ message: "updateLocation" });
+  const foundLocation = DUMMY_LOCATIONS.find(
+    (c) => c.id === +req.params.locationId,
+  );
+  if (!foundLocation) {
+    return next(new HttpError("Location not found", 404));
+  }
+  res.json({ message: "updateLocation" }).status(200);
 };
 
 export const deleteLocation = (
@@ -69,5 +88,13 @@ export const deleteLocation = (
   res: Response,
   next: NextFunction,
 ) => {
-  res.json({ message: "deleteLocation" });
+  const foundLocation = DUMMY_LOCATIONS.find(
+    (c) => c.id === +req.params.locationId,
+  );
+  if (!foundLocation) {
+    return next(new HttpError("Location not found", 404));
+  }
+
+  DUMMY_LOCATIONS.filter((c) => c.id !== +req.params.locationId);
+  return res.status(200).json({ message: "Location deleted" });
 };
