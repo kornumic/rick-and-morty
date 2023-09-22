@@ -14,6 +14,7 @@ export type Character = {
   origin: number | undefined;
   location: number | undefined;
   image: string;
+  episode: number[];
   created: string;
 };
 
