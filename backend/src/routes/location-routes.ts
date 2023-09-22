@@ -3,8 +3,10 @@ import express from "express";
 const router = express.Router();
 import {
   createLocation,
+  deleteLocation,
   getAllLocations,
   getLocationById,
+  updateLocation,
 } from "../controllers/location-controllers";
 
 export type Location = {
@@ -18,6 +20,12 @@ export type Location = {
 
 // GET /api/location/:locationId
 router.get("/:locationId", getLocationById);
+
+// PUT /api/location/:locationId
+router.put("/:episodeId", updateLocation);
+
+// DELETE /api/location/:locationId
+router.delete("/:episodeId", deleteLocation);
 
 // POST /api/location
 router.post("/", createLocation);

@@ -54,3 +54,19 @@ export const createEpisode = (
 
   res.json({ episode });
 };
+
+export const updateEpisode = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  res.json({ message: "updateEpisode" });
+};
+
+export const deleteEpisode = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  res.json({ message: "deleteEpisode" });
+};

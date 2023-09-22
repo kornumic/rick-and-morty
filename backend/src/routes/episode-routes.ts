@@ -5,6 +5,8 @@ import {
   createEpisode,
   getAllEpisodes,
   getEpisodeById,
+  updateEpisode,
+  deleteEpisode,
 } from "../controllers/episode-controllers";
 
 export type Episode = {
@@ -18,6 +20,12 @@ export type Episode = {
 
 // GET /api/episode/:episodeId
 router.get("/:episodeId", getEpisodeById);
+
+// PUT /api/episode/:episodeId
+router.put("/:episodeId", updateEpisode);
+
+// DELETE /api/episode/:episodeId
+router.delete("/:episodeId", deleteEpisode);
 
 // POST /api/episode
 router.post("/", createEpisode);

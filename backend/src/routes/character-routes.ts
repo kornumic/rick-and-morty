@@ -3,8 +3,10 @@ import express from "express";
 const router = express.Router();
 import {
   createCharacter,
+  deleteCharacter,
   getAllCharacters,
   getCharacterById,
+  updateCharacter,
 } from "../controllers/character-controllers";
 
 export type Character = {
@@ -23,6 +25,12 @@ export type Character = {
 
 // GET /api/character/:characterId
 router.get("/:characterId", getCharacterById);
+
+// PUT /api/character/:characterId
+router.put("/:characterId", updateCharacter);
+
+// DELETE /api/character/:characterId
+router.delete("/:characterId", deleteCharacter);
 
 // POST /api/character
 router.post("/", createCharacter);

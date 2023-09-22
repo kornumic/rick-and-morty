@@ -54,3 +54,19 @@ export const createLocation = (
 
   res.json({ location });
 };
+
+export const updateLocation = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  res.json({ message: "updateLocation" });
+};
+
+export const deleteLocation = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  res.json({ message: "deleteLocation" });
+};

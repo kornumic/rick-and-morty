@@ -54,3 +54,19 @@ export const createCharacter = (
 
   res.json({ character });
 };
+
+export const updateCharacter = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  res.json({ message: "updateCharacter" });
+};
+
+export const deleteCharacter = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  res.json({ message: "deleteCharacter" });
+};
