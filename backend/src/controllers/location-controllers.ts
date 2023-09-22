@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { DUMMY_LOCATIONS } from "./dummies";
 
 import { Location } from "../routes/location-routes";
+import HttpError from "../models/HttpError";
 
 export const getLocationById = (
   req: Request,
@@ -12,7 +13,7 @@ export const getLocationById = (
   const location = DUMMY_LOCATIONS.find((c) => c.id === +req.params.locationId);
   console.log(location);
   if (!location) {
-    return res.status(404).json({ message: "Location not found" });
+    return next(new HttpError("Location not found", 404));
   }
   res.json(location);
 };
