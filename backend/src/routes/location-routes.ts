@@ -1,5 +1,5 @@
 import express from "express";
-import { DUMMY_LOCATIONS } from "./dummies";
+import { DUMMY_LOCATIONS } from "../controllers/dummies";
 
 const router = express.Router();
 

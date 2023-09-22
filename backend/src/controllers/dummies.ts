@@ -1,6 +1,6 @@
-import { Character } from "./character-routes";
-import { Episode } from "./episode-routes";
-import { Location } from "./location-routes";
+import { Character } from "../routes/character-routes";
+import { Episode } from "../routes/episode-routes";
+import { Location } from "../routes/location-routes";
 
 export const DUMMY_CHARACTERS: Character[] = [
   {
