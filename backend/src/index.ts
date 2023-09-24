@@ -30,17 +30,17 @@ app.use("/api/episode", episodeRoutes);
 app.use("/api/location", locationRoutes);
 
 app.use("/api", (req: Request, res: Response, next: NextFunction) => {
-  next(new HttpError("Route not found", 404));
+  return next(new HttpError("Route not found", 404));
 });
 
 app.use("/", (req: Request, res: Response, next: NextFunction) => {
   console.log("Serving static files");
-  res.send("Hello World!");
+  return res.send("Hello World!");
 });
 
-app.use((error: HttpError, req: Request, res: Response) => {
+app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
   error.status = error.status || 500;
-  res.status(error.status).json({ message: error.message });
+  return res.json({ message: error.message }).status(error.status);
 });
 
 const run = async () => {

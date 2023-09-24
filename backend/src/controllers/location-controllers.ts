@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { DUMMY_LOCATIONS, removeLocation } from "./dummies";
+import { DUMMY_LOCATIONS, removeLocation } from "../database/location-model";
 
 import HttpError from "../models/HttpError";
 

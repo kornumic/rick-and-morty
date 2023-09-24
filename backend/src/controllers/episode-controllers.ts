@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { removeEpisode, DUMMY_EPISODES } from "./dummies";
+import { removeEpisode, DUMMY_EPISODES } from "../database/episode-model";
 
 import HttpError from "../models/HttpError";
 

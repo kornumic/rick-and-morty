@@ -1,4 +1,4 @@
-import { DUMMY_CHARACTERS, removeCharacter } from "./dummies";
+import { DUMMY_CHARACTERS, removeCharacter } from "../database/character-model";
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../models/HttpError";
 
@@ -89,7 +89,6 @@ export const updateCharacter = (
     (c) => c.id === +req.params.characterId,
   );
   if (!foundCharacter) {
-    console.log(foundCharacter);
     return next(new HttpError("Character not found", 404));
   }
   if (patchData.id) {
