@@ -89,7 +89,7 @@ export const updateLocation = (
     return next(new HttpError("Invalid input", 422));
   }
   Object.assign(foundLocation, patchData);
-  return res.json(foundLocation).status(200);
+  return res.status(200).json(foundLocation);
 };
 
 export const deleteLocation = (

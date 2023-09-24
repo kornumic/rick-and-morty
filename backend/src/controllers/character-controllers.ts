@@ -95,7 +95,7 @@ export const updateCharacter = (
     return next(new HttpError("Invalid input", 422));
   }
   Object.assign(foundCharacter, patchData);
-  return res.json(foundCharacter).status(200);
+  return res.status(200).json(foundCharacter);
 };
 
 export const deleteCharacter = (

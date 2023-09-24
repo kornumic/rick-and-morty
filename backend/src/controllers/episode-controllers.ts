@@ -87,7 +87,7 @@ export const updateEpisode = (
     return next(new HttpError("Invalid input", 422));
   }
   Object.assign(foundEpisode, patchData);
-  return res.json(foundEpisode).status(200);
+  return res.status(200).json(foundEpisode);
 };
 
 export const deleteEpisode = (

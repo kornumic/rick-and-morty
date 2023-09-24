@@ -41,8 +41,9 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
+  console.log(error.status);
   error.status = error.status || 500;
-  return res.json({ message: error.message }).status(error.status);
+  return res.status(error.status).json({ message: error.message });
 });
 
 const run = async () => {
