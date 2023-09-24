@@ -10,6 +10,7 @@ import episodeRoutes from "./routes/episode-routes";
 import locationRoutes from "./routes/location-routes";
 import authRoutes from "./routes/auth-routes";
 import HttpError from "./models/HttpError";
+import userRoutes from "./routes/user-routes";
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_URL } = process.env;
 if (!POSTGRES_USER || !POSTGRES_PASSWORD || !POSTGRES_URL)
@@ -24,6 +25,7 @@ const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 
+app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/character", characterRoutes);
 app.use("/api/episode", episodeRoutes);

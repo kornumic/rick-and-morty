@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import { getAllUsers } from "../controllers/user-controllers";
 
 const router = express.Router();
 
@@ -39,5 +40,7 @@ router.get(":userId/favorite-episodes", (req: Request, res: Response) => {
 router.post(":userId/favorite-locations", (req: Request, res: Response) => {
   res.json({ message: "User favorite locations" });
 });
+
+router.get("/", getAllUsers);
 
 export default router;
