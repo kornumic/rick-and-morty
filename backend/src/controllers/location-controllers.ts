@@ -1,8 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { DUMMY_LOCATIONS, removeLocation } from "./dummies";
 
-import { Location } from "../routes/location-routes";
 import HttpError from "../models/HttpError";
+
+export type Location = {
+  id: number | undefined;
+  name: string;
+  type: string;
+  dimension: string;
+  residents: number[];
+  created: string;
+};
 
 export const getLocationById = (
   req: Request,

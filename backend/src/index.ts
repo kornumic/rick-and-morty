@@ -38,7 +38,7 @@ app.use("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("Hello World!");
 });
 
-app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
+app.use((error: HttpError, req: Request, res: Response) => {
   error.status = error.status || 500;
   res.status(error.status).json({ message: error.message });
 });

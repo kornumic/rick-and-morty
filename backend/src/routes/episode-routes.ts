@@ -9,15 +9,6 @@ import {
   deleteEpisode,
 } from "../controllers/episode-controllers";
 
-export type Episode = {
-  id: number | undefined;
-  name: string;
-  air_date: string;
-  episode: string;
-  characters: number[];
-  created: string;
-};
-
 // GET /api/episode/:episodeId
 router.get("/:episodeId", getEpisodeById);
 

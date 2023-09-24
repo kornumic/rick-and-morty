@@ -2,15 +2,6 @@ import express, { Request, Response } from "express";
 
 const router = express.Router();
 
-export type User = {
-  id: number | undefined;
-  name: string;
-  email: string;
-  password: string;
-  role: "admin" | "user";
-  created: string;
-};
-
 router.get(":userId", (req: Request, res: Response) => {
   res.json({ message: "User data + created entities" });
 });

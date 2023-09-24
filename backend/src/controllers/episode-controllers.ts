@@ -1,8 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { removeEpisode, DUMMY_EPISODES } from "./dummies";
 
-import { Episode } from "../routes/episode-routes";
 import HttpError from "../models/HttpError";
+
+export type Episode = {
+  id: number | undefined;
+  name: string;
+  air_date: string;
+  episode: string;
+  characters: number[];
+  created: string;
+};
 
 export const getEpisodeById = (
   req: Request,

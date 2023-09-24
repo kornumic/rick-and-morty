@@ -1,7 +1,20 @@
 import { DUMMY_CHARACTERS, removeCharacter } from "./dummies";
 import { NextFunction, Request, Response } from "express";
-import { Character } from "../routes/character-routes";
 import HttpError from "../models/HttpError";
+
+export type Character = {
+  id: number | undefined;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: number | undefined;
+  location: number | undefined;
+  image: string;
+  episode: number[];
+  created: string;
+};
 
 export const getCharacterById = (
   req: Request,

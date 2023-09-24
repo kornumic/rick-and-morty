@@ -1,8 +1,8 @@
-import { Character } from "../routes/character-routes";
-import { Episode } from "../routes/episode-routes";
-import { Location } from "../routes/location-routes";
-import { User } from "../routes/user-routes";
 import HttpError from "../models/HttpError";
+import { Character } from "./character-controllers";
+import { Episode } from "./episode-controllers";
+import { Location } from "./location-controllers";
+import { User } from "./user-controllers";
 
 export let DUMMY_CHARACTERS: Character[] = [
   {

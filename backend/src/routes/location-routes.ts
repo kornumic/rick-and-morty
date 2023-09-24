@@ -9,15 +9,6 @@ import {
   updateLocation,
 } from "../controllers/location-controllers";
 
-export type Location = {
-  id: number | undefined;
-  name: string;
-  type: string;
-  dimension: string;
-  residents: number[];
-  created: string;
-};
-
 // GET /api/location/:locationId
 router.get("/:locationId", getLocationById);
 
