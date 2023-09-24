@@ -8,18 +8,19 @@ import {
   getCharacterById,
   updateCharacter,
 } from "../controllers/character-controllers";
+import { checkAuth } from "../controllers/auth-controllers";
 
 // GET /api/character/:characterId
 router.get("/:characterId", getCharacterById);
 
 // PUT /api/character/:characterId
-router.patch("/:characterId", updateCharacter);
+router.patch("/:characterId", checkAuth, updateCharacter);
 
 // DELETE /api/character/:characterId
-router.delete("/:characterId", deleteCharacter);
+router.delete("/:characterId", checkAuth, deleteCharacter);
 
 // POST /api/character
-router.post("/", createCharacter);
+router.post("/", checkAuth, createCharacter);
 
 // GET /api/character?page=1&perPage=20
 router.get("/", getAllCharacters);

@@ -1,5 +1,9 @@
 import express, { Request, Response } from "express";
 import { getAllUsers } from "../controllers/user-controllers";
+import {
+  checkAuth,
+  requireAuthorization,
+} from "../controllers/auth-controllers";
 
 const router = express.Router();
 
@@ -41,6 +45,6 @@ router.post(":userId/favorite-locations", (req: Request, res: Response) => {
   res.json({ message: "User favorite locations" });
 });
 
-router.get("/", getAllUsers);
+router.get("/", checkAuth, requireAuthorization(["admin"]), getAllUsers);
 
 export default router;

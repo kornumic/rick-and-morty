@@ -2,14 +2,14 @@ import { Request, Response, NextFunction } from "express";
 import HttpError from "../models/HttpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { DUMMY_USERS } from "../database/user-model";
-import { User } from "./user-controllers";
+import { Role, User } from "./user-controllers";
 import bcrypt from "bcrypt";
 
 export type UserAuthData = {
   userId: number;
   name: string;
   email: string;
-  role: "admin" | "user";
+  role: Role;
 };
 
 declare module "jsonwebtoken" {
@@ -26,12 +26,26 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
       return next(new HttpError("Not authenticated.", 401));
     }
     const decodedToken = jwt.verify(token, pk) as JwtPayload;
-
-    req.body.userAuthData = { ...decodedToken.user };
+    if (!decodedToken.userAuthData) {
+      return next(new HttpError("Not authenticated.", 401));
+    }
+    req.body.userAuthData = { ...decodedToken.userAuthData };
     return next();
   } catch (err) {
     return next(new HttpError("Not authenticated.", 401));
   }
+};
+
+export const requireAuthorization = (authorization: Role[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (
+      !req.body.userAuthData ||
+      !authorization.includes(req.body.userAuthData.role)
+    ) {
+      return next(new HttpError("Not authorized.", 403));
+    }
+    return next();
+  };
 };
 
 export const signup = (req: Request, res: Response, next: NextFunction) => {
