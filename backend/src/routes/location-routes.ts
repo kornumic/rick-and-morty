@@ -22,10 +22,10 @@ export type Location = {
 router.get("/:locationId", getLocationById);
 
 // PUT /api/location/:locationId
-router.put("/:episodeId", updateLocation);
+router.patch("/:locationId", updateLocation);
 
 // DELETE /api/location/:locationId
-router.delete("/:episodeId", deleteLocation);
+router.delete("/:locationId", deleteLocation);
 
 // POST /api/location
 router.post("/", createLocation);

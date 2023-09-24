@@ -1,20 +1,19 @@
 import { NextFunction, Request, Response } from "express";
-import { DUMMY_EPISODES } from "./dummies";
+import { removeEpisode, DUMMY_EPISODES } from "./dummies";
 
 import { Episode } from "../routes/episode-routes";
+import HttpError from "../models/HttpError";
 
 export const getEpisodeById = (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(req.params.episodeId);
   const episode = DUMMY_EPISODES.find((c) => c.id === +req.params.episodeId);
-  console.log(episode);
   if (!episode) {
-    return res.status(404).json({ message: "Episode not found" });
+    return next(new HttpError("Episode not found", 404));
   }
-  res.json(episode);
+  return res.json(episode);
 };
 
 export const getAllEpisodes = (
@@ -26,21 +25,27 @@ export const getAllEpisodes = (
   const episodesPerPage = +(req.query.perPage || "20");
   const offset = (page - 1) * episodesPerPage;
 
+  // calculate info values
+  const count = DUMMY_EPISODES.length;
+  const pages = Math.ceil(count / episodesPerPage);
+  const nextPage = page + 1 <= pages ? page + 1 : undefined;
+  const prevPage = page - 1 > 0 ? page - 1 : undefined;
+
+  if (page > pages || page < 1)
+    return next(new HttpError("Page not found", 404));
   const episodes = DUMMY_EPISODES.slice(offset, offset + episodesPerPage);
 
-  res.json({
-    info: {
-      count: DUMMY_EPISODES.length,
-      pages: Math.ceil(DUMMY_EPISODES.length / episodesPerPage),
-      next:
-        page + 1 <= Math.ceil(DUMMY_EPISODES.length / episodesPerPage)
-          ? page + 1
-          : undefined,
-      prev: page - 1 > 0 ? page - 1 : undefined,
-    },
-    results: episodes,
-  });
-  res.status(200);
+  return res
+    .json({
+      info: {
+        count: count,
+        pages: pages,
+        next: nextPage,
+        prev: prevPage,
+      },
+      results: episodes,
+    })
+    .status(200);
 };
 
 export const createEpisode = (
@@ -49,10 +54,13 @@ export const createEpisode = (
   next: NextFunction,
 ) => {
   const episode = req.body as Episode;
+  if (episode.id) {
+    return next(new HttpError("Invalid input", 422));
+  }
   episode.id = DUMMY_EPISODES.length + 1;
   DUMMY_EPISODES.push(episode);
 
-  res.json({ episode });
+  return res.json({ episode });
 };
 
 export const updateEpisode = (
@@ -60,7 +68,18 @@ export const updateEpisode = (
   res: Response,
   next: NextFunction,
 ) => {
-  res.json({ message: "updateEpisode" });
+  const patchData = req.body as Partial<Episode>;
+  const foundEpisode = DUMMY_EPISODES.find(
+    (c) => c.id === +req.params.episodeId,
+  );
+  if (!foundEpisode) {
+    return next(new HttpError("Episode not found", 404));
+  }
+  if (patchData.id) {
+    return next(new HttpError("Invalid input", 422));
+  }
+  Object.assign(foundEpisode, patchData);
+  return res.json(foundEpisode).status(200);
 };
 
 export const deleteEpisode = (
@@ -68,5 +87,10 @@ export const deleteEpisode = (
   res: Response,
   next: NextFunction,
 ) => {
-  res.json({ message: "deleteEpisode" });
+  try {
+    removeEpisode(+req.params.episodeId);
+  } catch (err) {
+    return next(err);
+  }
+  return res.status(200).json({ message: "Episode deleted" });
 };

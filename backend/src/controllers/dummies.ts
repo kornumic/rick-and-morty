@@ -1,8 +1,10 @@
 import { Character } from "../routes/character-routes";
 import { Episode } from "../routes/episode-routes";
 import { Location } from "../routes/location-routes";
+import { User } from "../routes/user-routes";
+import HttpError from "../models/HttpError";
 
-export const DUMMY_CHARACTERS: Character[] = [
+export let DUMMY_CHARACTERS: Character[] = [
   {
     id: 1,
     name: "Rick Sanchez",
@@ -39,7 +41,16 @@ export const DUMMY_CHARACTERS: Character[] = [
   },
 ];
 
-export const DUMMY_EPISODES: Episode[] = [
+export const removeCharacter = (characterId: number) => {
+  const foundCharacter = DUMMY_CHARACTERS.find((c) => c.id === characterId);
+  if (!foundCharacter) {
+    throw new HttpError("Character not found", 404);
+  }
+
+  DUMMY_CHARACTERS = DUMMY_CHARACTERS.filter((c) => c.id !== characterId);
+};
+
+export let DUMMY_EPISODES: Episode[] = [
   {
     id: 1,
     name: "Pilot",
@@ -53,7 +64,15 @@ export const DUMMY_EPISODES: Episode[] = [
   },
 ];
 
-export const DUMMY_LOCATIONS: Location[] = [
+export const removeEpisode = (episodeId: number) => {
+  const foundEpisode = DUMMY_EPISODES.find((c) => c.id === episodeId);
+  if (!foundEpisode) {
+    throw new HttpError("Episode not found", 404);
+  }
+  DUMMY_EPISODES = DUMMY_EPISODES.filter((c) => c.id !== episodeId);
+};
+
+export let DUMMY_LOCATIONS: Location[] = [
   {
     id: 1,
     name: "Earth (C-137)",
@@ -63,6 +82,34 @@ export const DUMMY_LOCATIONS: Location[] = [
       38, 45, 71, 82, 83, 92, 112, 114, 116, 117, 120, 127, 155, 169, 175, 179,
       186, 201, 216, 239, 271, 302, 303, 338, 343, 356, 394,
     ],
+    created: "2017-11-10T12:42:04.162Z",
+  },
+];
+
+export const removeLocation = (locationId: number) => {
+  const foundLocation = DUMMY_LOCATIONS.find((c) => c.id === locationId);
+  if (!foundLocation) {
+    throw new HttpError("Location not found", 404);
+  }
+
+  DUMMY_LOCATIONS = DUMMY_LOCATIONS.filter((c) => c.id !== locationId);
+};
+
+export const DUMMY_USERS: User[] = [
+  {
+    id: 1,
+    name: "Admin",
+    email: "admin@test.com",
+    password: "admin",
+    role: "admin",
+    created: "2017-11-10T12:42:04.162Z",
+  },
+  {
+    id: 2,
+    name: "User",
+    email: "user@test.com",
+    password: "user",
+    role: "user",
     created: "2017-11-10T12:42:04.162Z",
   },
 ];

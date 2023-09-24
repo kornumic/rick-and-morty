@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { DUMMY_LOCATIONS } from "./dummies";
+import { DUMMY_LOCATIONS, removeLocation } from "./dummies";
 
 import { Location } from "../routes/location-routes";
 import HttpError from "../models/HttpError";
@@ -37,16 +37,17 @@ export const getAllLocations = (
 
   const locations = DUMMY_LOCATIONS.slice(offset, offset + locationsPerPage);
 
-  res.json({
-    info: {
-      count: count,
-      pages: pages,
-      next: nextPage,
-      prev: prevPage,
-    },
-    results: locations,
-  });
-  res.status(200);
+  return res
+    .json({
+      info: {
+        count: count,
+        pages: pages,
+        next: nextPage,
+        prev: prevPage,
+      },
+      results: locations,
+    })
+    .status(200);
 };
 
 export const createLocation = (
@@ -55,18 +56,13 @@ export const createLocation = (
   next: NextFunction,
 ) => {
   const location = req.body as Location;
-  if (!location.name || !location.type || !location.dimension) {
+  if (location.id) {
     return next(new HttpError("Invalid input", 422));
   }
-  const foundLocation = DUMMY_LOCATIONS.find((c) => c.id === location.id);
-  if (foundLocation) {
-    return next(new HttpError("Location already exists", 422));
-  }
-
   location.id = DUMMY_LOCATIONS.length + 1;
   DUMMY_LOCATIONS.push(location);
 
-  res.json({ location });
+  return res.json({ location });
 };
 
 export const updateLocation = (
@@ -74,13 +70,18 @@ export const updateLocation = (
   res: Response,
   next: NextFunction,
 ) => {
+  const patchData = req.body as Partial<Location>;
   const foundLocation = DUMMY_LOCATIONS.find(
     (c) => c.id === +req.params.locationId,
   );
   if (!foundLocation) {
     return next(new HttpError("Location not found", 404));
   }
-  res.json({ message: "updateLocation" }).status(200);
+  if (patchData.id) {
+    return next(new HttpError("Invalid input", 422));
+  }
+  Object.assign(foundLocation, patchData);
+  return res.json(foundLocation).status(200);
 };
 
 export const deleteLocation = (
@@ -88,13 +89,10 @@ export const deleteLocation = (
   res: Response,
   next: NextFunction,
 ) => {
-  const foundLocation = DUMMY_LOCATIONS.find(
-    (c) => c.id === +req.params.locationId,
-  );
-  if (!foundLocation) {
-    return next(new HttpError("Location not found", 404));
+  try {
+    removeLocation(+req.params.locationId);
+  } catch (err) {
+    return next(err);
   }
-
-  DUMMY_LOCATIONS.filter((c) => c.id !== +req.params.locationId);
   return res.status(200).json({ message: "Location deleted" });
 };

@@ -27,7 +27,7 @@ export type Character = {
 router.get("/:characterId", getCharacterById);
 
 // PUT /api/character/:characterId
-router.put("/:characterId", updateCharacter);
+router.patch("/:characterId", updateCharacter);
 
 // DELETE /api/character/:characterId
 router.delete("/:characterId", deleteCharacter);

@@ -24,10 +24,19 @@ const PORT = process.env.PORT || 8080;
 
 app.use(bodyParser.json());
 
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/character", characterRoutes);
 app.use("/api/episode", episodeRoutes);
 app.use("/api/location", locationRoutes);
+
+app.use("/api", (req: Request, res: Response, next: NextFunction) => {
+  next(new HttpError("Route not found", 404));
+});
+
+app.use("/", (req: Request, res: Response, next: NextFunction) => {
+  console.log("Serving static files");
+  res.send("Hello World!");
+});
 
 app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
   error.status = error.status || 500;

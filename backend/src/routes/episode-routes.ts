@@ -22,7 +22,7 @@ export type Episode = {
 router.get("/:episodeId", getEpisodeById);
 
 // PUT /api/episode/:episodeId
-router.put("/:episodeId", updateEpisode);
+router.patch("/:episodeId", updateEpisode);
 
 // DELETE /api/episode/:episodeId
 router.delete("/:episodeId", deleteEpisode);

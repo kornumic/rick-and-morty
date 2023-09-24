@@ -1,6 +1,7 @@
-import { DUMMY_CHARACTERS } from "./dummies";
+import { DUMMY_CHARACTERS, removeCharacter } from "./dummies";
 import { NextFunction, Request, Response } from "express";
 import { Character } from "../routes/character-routes";
+import HttpError from "../models/HttpError";
 
 export const getCharacterById = (
   req: Request,
@@ -10,9 +11,8 @@ export const getCharacterById = (
   const character = DUMMY_CHARACTERS.find(
     (c) => c.id === +req.params.characterId,
   );
-  console.log(character);
   if (!character) {
-    return res.status(404).json({ message: "Character not found" });
+    return next(new HttpError("Character not found", 404));
   }
   res.json(character);
 };
@@ -26,21 +26,29 @@ export const getAllCharacters = (
   const charactersPerPage = +(req.query.perPage || "20");
   const offset = (page - 1) * charactersPerPage;
 
+  // calculate info values
+  const count = DUMMY_CHARACTERS.length;
+  const pages = Math.ceil(count / charactersPerPage);
+  const nextPage = page + 1 <= pages ? page + 1 : undefined;
+  const prevPage = page - 1 > 0 ? page - 1 : undefined;
+
+  if (page > pages || page < 1) {
+    return next(new HttpError("Page not found", 404));
+  }
+
   const characters = DUMMY_CHARACTERS.slice(offset, offset + charactersPerPage);
 
-  res.json({
-    info: {
-      count: DUMMY_CHARACTERS.length,
-      pages: Math.ceil(DUMMY_CHARACTERS.length / charactersPerPage),
-      next:
-        page + 1 <= Math.ceil(DUMMY_CHARACTERS.length / charactersPerPage)
-          ? page + 1
-          : undefined,
-      prev: page - 1 > 0 ? page - 1 : undefined,
-    },
-    results: characters,
-  });
-  res.status(200);
+  return res
+    .json({
+      info: {
+        count: count,
+        pages: pages,
+        next: nextPage,
+        prev: prevPage,
+      },
+      results: characters,
+    })
+    .status(200);
 };
 
 export const createCharacter = (
@@ -49,10 +57,13 @@ export const createCharacter = (
   next: NextFunction,
 ) => {
   const character = req.body as Character;
+  if (character.id) {
+    return next(new HttpError("Invalid input", 422));
+  }
   character.id = DUMMY_CHARACTERS.length + 1;
   DUMMY_CHARACTERS.push(character);
 
-  res.json({ character });
+  return res.json({ character });
 };
 
 export const updateCharacter = (
@@ -60,7 +71,19 @@ export const updateCharacter = (
   res: Response,
   next: NextFunction,
 ) => {
-  res.json({ message: "updateCharacter" });
+  const patchData = req.body as Partial<Character>;
+  const foundCharacter = DUMMY_CHARACTERS.find(
+    (c) => c.id === +req.params.characterId,
+  );
+  if (!foundCharacter) {
+    console.log(foundCharacter);
+    return next(new HttpError("Character not found", 404));
+  }
+  if (patchData.id) {
+    return next(new HttpError("Invalid input", 422));
+  }
+  Object.assign(foundCharacter, patchData);
+  return res.json(foundCharacter).status(200);
 };
 
 export const deleteCharacter = (
@@ -68,5 +91,10 @@ export const deleteCharacter = (
   res: Response,
   next: NextFunction,
 ) => {
-  res.json({ message: "deleteCharacter" });
+  try {
+    removeCharacter(+req.params.characterId);
+  } catch (err) {
+    return next(err);
+  }
+  return res.status(200).json({ message: "Character deleted" });
 };
