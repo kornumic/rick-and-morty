@@ -1,5 +1,5 @@
 import express, { Request, Response, Application, NextFunction } from "express";
-import { Sequelize } from "sequelize";
+
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 
@@ -12,13 +12,7 @@ import authRoutes from "./routes/auth-routes";
 import HttpError from "./util/HttpError";
 import userRoutes from "./routes/user-routes";
 
-const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_URL } = process.env;
-if (!POSTGRES_USER || !POSTGRES_PASSWORD || !POSTGRES_URL)
-  throw new Error("Missing env variables");
-
-const sequelize = new Sequelize(
-  `postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_URL}`,
-);
+import { sequelize } from "./util/database";
 
 const app: Application = express();
 const PORT = process.env.PORT || 8080;
