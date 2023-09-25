@@ -13,6 +13,8 @@ import HttpError from "./util/HttpError";
 import userRoutes from "./routes/user-routes";
 
 import { sequelize } from "./util/database";
+import { CharacterModel } from "./database/character-model";
+import { UserModel } from "./database/user-model";
 
 const app: Application = express();
 const PORT = process.env.PORT || 8080;
@@ -39,6 +41,9 @@ app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
   error.status = error.status || 500;
   return res.status(error.status).json({ message: error.message });
 });
+
+CharacterModel.hasOne(UserModel);
+UserModel.hasMany(CharacterModel);
 
 const run = async () => {
   try {

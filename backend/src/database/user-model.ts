@@ -43,20 +43,3 @@ export const UserModel = sequelize.define<UserInstance>("user-model", {
     allowNull: false,
   },
 });
-
-export const DUMMY_USERS: User[] = [
-  {
-    id: 1,
-    name: "Admin",
-    email: "admin@test.com",
-    password: "$2b$12$c1cys.NvGnFfPQWUY6tFMedEDqP3W3cmGBAcMpn93oOA2.4tGjoK6",
-    role: "admin",
-  },
-  {
-    id: 2,
-    name: "User",
-    email: "user@test.com",
-    password: "$2b$12$r3d0UOB0JLxRPxiDLkneg.N4X1.o9is/.cghLsnMKOoP4serXqL72",
-    role: "user",
-  },
-];

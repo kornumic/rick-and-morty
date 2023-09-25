@@ -1,5 +1,69 @@
-import { Character } from "../controllers/character-controllers";
 import HttpError from "../util/HttpError";
+import { DataTypes, Model, Optional } from "sequelize";
+import { sequelize } from "../util/database";
+
+export type Lock = "unlocked" | "locked";
+
+export type Character = {
+  id: number | undefined;
+  name: string;
+  status: string | null;
+  species: string | null;
+  type: string | null;
+  gender: string;
+  image: string;
+  lock: Lock | null;
+  userId?: number;
+};
+
+interface CharacterCreation extends Optional<Character, "id"> {}
+
+interface CharacterInstance
+  extends Model<Character, CharacterCreation>,
+    Character {
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export const CharacterModel = sequelize.define<CharacterInstance>(
+  "character-model",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    species: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lock: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+);
 
 export let DUMMY_CHARACTERS: Character[] = [
   {
@@ -9,15 +73,9 @@ export let DUMMY_CHARACTERS: Character[] = [
     species: "Human",
     type: "",
     gender: "Male",
-    origin: 1,
-    location: 3,
     image: "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-    episode: [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-      22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-      40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
-    ],
-    created: "2017-11-04T18:48:46.250Z",
+    lock: "unlocked",
+    userId: 1,
   },
   {
     id: 2,
@@ -26,15 +84,9 @@ export let DUMMY_CHARACTERS: Character[] = [
     species: "Human",
     type: "",
     gender: "Male",
-    origin: undefined,
-    location: 3,
     image: "https://rickandmortyapi.com/api/character/avatar/2.jpeg",
-    episode: [
-      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-      22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
-      40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
-    ],
-    created: "2017-11-04T18:50:21.651Z",
+    lock: "unlocked",
+    userId: 1,
   },
 ];
 

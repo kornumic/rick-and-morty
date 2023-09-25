@@ -1,20 +1,12 @@
-import { DUMMY_CHARACTERS, removeCharacter } from "../database/character-model";
+import {
+  CharacterModel,
+  DUMMY_CHARACTERS,
+  removeCharacter,
+} from "../database/character-model";
 import { NextFunction, Request, Response } from "express";
 import HttpError from "../util/HttpError";
-
-export type Character = {
-  id: number | undefined;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: number | undefined;
-  location: number | undefined;
-  image: string;
-  episode: number[];
-  created: string;
-};
+import { Character } from "../database/character-model";
+import { UserModel } from "../database/user-model";
 
 export const getCharacterById = (
   req: Request,
@@ -30,7 +22,7 @@ export const getCharacterById = (
   res.json(character);
 };
 
-export const getAllCharacters = (
+export const getAllCharacters = async (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -39,18 +31,20 @@ export const getAllCharacters = (
   const charactersPerPage = +(req.query.perPage || "20");
   const offset = (page - 1) * charactersPerPage;
 
-  // calculate info values
-  const count = DUMMY_CHARACTERS.length;
+  const charactersAndCount = await CharacterModel.findAndCountAll({
+    limit: charactersPerPage,
+    offset: offset,
+  });
+
+  const count = charactersAndCount.count;
   const pages = Math.ceil(count / charactersPerPage);
   const nextPage = page + 1 <= pages ? page + 1 : undefined;
   const prevPage = page - 1 > 0 ? page - 1 : undefined;
+  const characters = charactersAndCount.rows;
 
-  if (page > pages || page < 1) {
-    return next(new HttpError("Page not found", 404));
-  }
-
-  const characters = DUMMY_CHARACTERS.slice(offset, offset + charactersPerPage);
-
+  // if (page > pages || page < 1) {
+  //   return next(new HttpError("Page not found", 404));
+  // }
   return res
     .json({
       info: {
@@ -64,19 +58,42 @@ export const getAllCharacters = (
     .status(200);
 };
 
-export const createCharacter = (
+export const createCharacter = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  const character = req.body as Character;
-  if (character.id) {
+  const userId = req.body.userAuthData.userId;
+  if (!userId) {
+    console.log(userId);
+    return next(new HttpError("Unauthorized", 403));
+  }
+  const fetchedUser = await UserModel.findByPk(userId);
+  if (!fetchedUser) {
+    return next(new HttpError("Unauthorized", 403));
+  }
+
+  const characterData = req.body as Character;
+  if (characterData.id) {
     return next(new HttpError("Invalid input", 422));
   }
-  character.id = DUMMY_CHARACTERS.length + 1;
-  DUMMY_CHARACTERS.push(character);
+  try {
+    const newCharacter = await CharacterModel.create({
+      name: characterData.name,
+      status: characterData.status,
+      species: characterData.species,
+      type: characterData.type,
+      gender: characterData.gender,
+      image: characterData.image,
+      lock: "unlocked",
+      userId: fetchedUser.id,
+    });
 
-  return res.json({ character });
+    return res.status(201).json(newCharacter);
+  } catch (err) {
+    console.log(err);
+    return next(new HttpError("Something went wrong", 500));
+  }
 };
 
 export const updateCharacter = (

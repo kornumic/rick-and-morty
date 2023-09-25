@@ -1,11 +1,13 @@
 import { Request, Response, NextFunction } from "express";
-import { DUMMY_USERS } from "../database/user-model";
+import { UserModel } from "../database/user-model";
 
-export const getAllUsers = (
+export const getAllUsers = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   // only for purpose of local testing, never do this in production
-  res.json(DUMMY_USERS);
+  const users = await UserModel.findAll();
+
+  res.json(users);
 };
