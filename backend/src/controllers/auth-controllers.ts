@@ -18,6 +18,12 @@ declare module "jsonwebtoken" {
   }
 }
 
+/**
+ * Check if user is authenticated by checking for a valid JWT token in the Authorization header.
+ * @param req
+ * @param res
+ * @param next
+ */
 export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(" ")[1];
   const pk = process.env.JWT_PRIVATE_KEY;
@@ -36,6 +42,11 @@ export const checkAuth = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+/**
+ * Check if user is authorized to access the resource based on the role provided in the authorization array.
+ * Encapsulated in a closure to allow for passing of the authorization array.
+ * @param authorization
+ */
 export const requireAuthorization = (authorization: Role[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
     if (
