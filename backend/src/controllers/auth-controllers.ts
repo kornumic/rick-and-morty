@@ -77,11 +77,17 @@ export const signup = (req: Request, res: Response, next: NextFunction) => {
 
   DUMMY_USERS.push(newUser);
 
-  const token = jwt.sign({ userAuthData: { user: authUser } }, pk, {
+  const token = jwt.sign({ userAuthData: authUser }, pk, {
     expiresIn: "1h",
   });
 
-  return res.status(201).json({ token: token });
+  return res
+    .header("Authorization", "Bearer " + token)
+    .status(201)
+    .json({
+      userId: userId,
+      role: role,
+    });
 };
 
 export const login = (req: Request, res: Response, next: NextFunction) => {
@@ -111,5 +117,11 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
 
   const token = jwt.sign({ userAuthData: authUser }, pk, { expiresIn: "1h" });
 
-  return res.status(200).json({ token: token });
+  return res
+    .header("Authorization", "Bearer " + token)
+    .status(200)
+    .json({
+      userId: foundUser.id!,
+      role: foundUser.role,
+    });
 };
