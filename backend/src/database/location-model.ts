@@ -1,5 +1,5 @@
 import { Location } from "../controllers/location-controllers";
-import HttpError from "../models/HttpError";
+import HttpError from "../util/HttpError";
 
 export let DUMMY_LOCATIONS: Location[] = [
   {

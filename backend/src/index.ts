@@ -9,7 +9,7 @@ import characterRoutes from "./routes/character-routes";
 import episodeRoutes from "./routes/episode-routes";
 import locationRoutes from "./routes/location-routes";
 import authRoutes from "./routes/auth-routes";
-import HttpError from "./models/HttpError";
+import HttpError from "./util/HttpError";
 import userRoutes from "./routes/user-routes";
 
 const { POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_URL } = process.env;

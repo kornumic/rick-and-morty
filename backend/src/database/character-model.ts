@@ -1,5 +1,5 @@
 import { Character } from "../controllers/character-controllers";
-import HttpError from "../models/HttpError";
+import HttpError from "../util/HttpError";
 
 export let DUMMY_CHARACTERS: Character[] = [
   {

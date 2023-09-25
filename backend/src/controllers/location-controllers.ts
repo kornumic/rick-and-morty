@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { DUMMY_LOCATIONS, removeLocation } from "../database/location-model";
 
-import HttpError from "../models/HttpError";
+import HttpError from "../util/HttpError";
 
 export type Location = {
   id: number | undefined;

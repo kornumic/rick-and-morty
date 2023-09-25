@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { removeEpisode, DUMMY_EPISODES } from "../database/episode-model";
 
-import HttpError from "../models/HttpError";
+import HttpError from "../util/HttpError";
 
 export type Episode = {
   id: number | undefined;

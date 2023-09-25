@@ -1,6 +1,6 @@
 import { DUMMY_CHARACTERS, removeCharacter } from "../database/character-model";
 import { NextFunction, Request, Response } from "express";
-import HttpError from "../models/HttpError";
+import HttpError from "../util/HttpError";
 
 export type Character = {
   id: number | undefined;

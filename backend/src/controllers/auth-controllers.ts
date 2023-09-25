@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import HttpError from "../models/HttpError";
+import HttpError from "../util/HttpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { DUMMY_USERS } from "../database/user-model";
 import { Role, User } from "./user-controllers";
