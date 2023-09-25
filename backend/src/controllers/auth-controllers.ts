@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express";
 import HttpError from "../util/HttpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { DUMMY_USERS } from "../database/user-model";
-import { Role, User } from "./user-controllers";
+import { UserModel } from "../database/user-model";
+import { Role } from "../database/user-model";
 import bcrypt from "bcrypt";
 
 export type UserAuthData = {
@@ -59,49 +59,45 @@ export const requireAuthorization = (authorization: Role[]) => {
   };
 };
 
-export const signup = (req: Request, res: Response, next: NextFunction) => {
+export const signup = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { name, email, password } = req.body;
-  const created = new Date().toISOString();
-  const role = "user";
-  const userId = DUMMY_USERS.length + 1;
   const pk = process.env.JWT_PRIVATE_KEY;
   if (!pk) {
     return next(new HttpError("Not authenticated.", 401));
   }
-  const hashedPassword = bcrypt.hashSync(password, 12);
 
-  const newUser: User = {
-    id: userId,
-    name,
-    email,
-    password: hashedPassword,
-    role,
-    created,
-  };
-
-  const authUser: UserAuthData = {
-    userId,
-    name,
-    email,
-    role,
-  };
-
-  DUMMY_USERS.push(newUser);
-
-  const token = jwt.sign({ userAuthData: authUser }, pk, {
-    expiresIn: "1h",
-  });
-
-  return res
-    .header("Authorization", "Bearer " + token)
-    .status(201)
-    .json({
-      userId: userId,
-      role: role,
+  try {
+    const user = await UserModel.create({
+      name: name,
+      email: email,
+      password: bcrypt.hashSync(password, 12),
+      role: "user",
     });
+
+    const token = jwt.sign({ userAuthData: user }, pk, {
+      expiresIn: "1h",
+    });
+
+    return res
+      .header("Authorization", "Bearer " + token)
+      .status(201)
+      .json({
+        user,
+      });
+  } catch (err) {
+    return next(new HttpError("Not authenticated.", 401));
+  }
 };
 
-export const login = (req: Request, res: Response, next: NextFunction) => {
+export const login = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   const { email, password } = req.body;
 
   const pk = process.env.JWT_PRIVATE_KEY;
@@ -109,7 +105,7 @@ export const login = (req: Request, res: Response, next: NextFunction) => {
     return next(new HttpError("Not authenticated.", 401));
   }
 
-  const foundUser = DUMMY_USERS.find((u) => u.email === email);
+  const foundUser = await UserModel.findOne({ where: { email: email } });
   if (!foundUser) {
     return next(new HttpError("Invalid credentials", 401));
   }

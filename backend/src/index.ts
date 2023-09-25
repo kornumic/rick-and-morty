@@ -43,7 +43,9 @@ app.use((error: HttpError, req: Request, res: Response, next: NextFunction) => {
 const run = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Connection has been established successfully.");
+    await sequelize.sync();
+    // await sequelize.sync({ force: true });
+    console.log("Connected to database.");
 
     app.listen(PORT, () => {
       console.log(`Server is running at http://localhost:${PORT}`);
