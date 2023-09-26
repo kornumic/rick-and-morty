@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import HttpError from "../util/HttpError";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { UserModel } from "../database/user-model";
+// import { UserModel } from "../database/user-model";
 import { Role } from "../database/user-model";
 import bcrypt from "bcrypt";
 
@@ -64,30 +64,29 @@ export const signup = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { name, email, password } = req.body;
+  // const { name, email, password } = req.body;
   const pk = process.env.JWT_PRIVATE_KEY;
   if (!pk) {
     return next(new HttpError("Not authenticated.", 401));
   }
 
   try {
-    const user = await UserModel.create({
-      name: name,
-      email: email,
-      password: bcrypt.hashSync(password, 12),
-      role: "user",
-    });
-
-    const token = jwt.sign({ userAuthData: user }, pk, {
-      expiresIn: "1h",
-    });
-
-    return res
-      .header("Authorization", "Bearer " + token)
-      .status(201)
-      .json({
-        user,
-      });
+    // const user = await UserModel.create({
+    //   name: name,
+    //   email: email,
+    //   password: bcrypt.hashSync(password, 12),
+    //   role: "user",
+    // });
+    // const token = jwt.sign({ userAuthData: user }, pk, {
+    //   expiresIn: "1h",
+    // });
+    //
+    // return res
+    //   .header("Authorization", "Bearer " + token)
+    //   .status(201)
+    //   .json({
+    //     user,
+    //   });
   } catch (err) {
     return next(new HttpError("Not authenticated.", 401));
   }
@@ -98,37 +97,37 @@ export const login = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const { email, password } = req.body;
+  // const { email, password } = req.body;
 
   const pk = process.env.JWT_PRIVATE_KEY;
   if (!pk) {
     return next(new HttpError("Not authenticated.", 401));
   }
 
-  const foundUser = await UserModel.findOne({ where: { email: email } });
-  if (!foundUser) {
-    return next(new HttpError("Invalid credentials", 401));
-  }
+  // const foundUser = await UserModel.findOne({ where: { email: email } });
+  // if (!foundUser) {
+  //   return next(new HttpError("Invalid credentials", 401));
+  // }
 
-  const isValidPassword = bcrypt.compareSync(password, foundUser.password);
-  if (!isValidPassword) {
-    return next(new HttpError("Invalid credentials", 401));
-  }
+  // const isValidPassword = bcrypt.compareSync(password, foundUser.password);
+  // if (!isValidPassword) {
+  //   return next(new HttpError("Invalid credentials", 401));
+  // }
 
-  const authUser: UserAuthData = {
-    userId: foundUser.id!,
-    name: foundUser.name,
-    email: foundUser.email,
-    role: foundUser.role,
-  };
+  // const authUser: UserAuthData = {
+  //   userId: foundUser.id!,
+  //   name: foundUser.name,
+  //   email: foundUser.email,
+  //   role: foundUser.role,
+  // };
 
-  const token = jwt.sign({ userAuthData: authUser }, pk, { expiresIn: "1h" });
-
-  return res
-    .header("Authorization", "Bearer " + token)
-    .status(200)
-    .json({
-      userId: foundUser.id!,
-      role: foundUser.role,
-    });
+  // const token = jwt.sign({ userAuthData: authUser }, pk, { expiresIn: "1h" });
+  //
+  // return res
+  //   .header("Authorization", "Bearer " + token)
+  //   .status(200)
+  //   .json({
+  //     userId: foundUser.id!,
+  //     role: foundUser.role,
+  //   });
 };

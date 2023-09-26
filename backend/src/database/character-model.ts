@@ -1,6 +1,6 @@
 import HttpError from "../util/HttpError";
-import { DataTypes, Model, Optional } from "sequelize";
-import { sequelize } from "../util/database";
+// import { DataTypes, Model, Optional } from "sequelize";
+// import { sequelize } from "../util/database";
 
 export type Lock = "unlocked" | "locked";
 
@@ -16,54 +16,54 @@ export type Character = {
   userId?: number;
 };
 
-interface CharacterCreation extends Optional<Character, "id"> {}
-
-interface CharacterInstance
-  extends Model<Character, CharacterCreation>,
-    Character {
-  createdAt?: Date;
-  updatedAt?: Date;
-}
-
-export const CharacterModel = sequelize.define<CharacterInstance>(
-  "character-model",
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    species: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    type: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    gender: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lock: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-  },
-);
+// interface CharacterCreation extends Optional<Character, "id"> {}
+//
+// interface CharacterInstance
+//   extends Model<Character, CharacterCreation>,
+//     Character {
+//   createdAt?: Date;
+//   updatedAt?: Date;
+// }
+//
+// export const CharacterModel = sequelize.define<CharacterInstance>(
+//   "character-model",
+//   {
+//     id: {
+//       type: DataTypes.INTEGER,
+//       autoIncrement: true,
+//       allowNull: false,
+//       primaryKey: true,
+//     },
+//     name: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     status: {
+//       type: DataTypes.STRING,
+//       allowNull: true,
+//     },
+//     species: {
+//       type: DataTypes.STRING,
+//       allowNull: true,
+//     },
+//     type: {
+//       type: DataTypes.STRING,
+//       allowNull: true,
+//     },
+//     gender: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     image: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//     lock: {
+//       type: DataTypes.STRING,
+//       allowNull: false,
+//     },
+//   },
+// );
 
 export let DUMMY_CHARACTERS: Character[] = [
   {
